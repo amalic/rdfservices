@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class GenericD2SController {
-	static final String PATTERN = "/d2s/**";
+    static final String PATTERN = "/d2s/**";
     private final AtomicLong counter = new AtomicLong();
 
     @RequestMapping(PATTERN)
