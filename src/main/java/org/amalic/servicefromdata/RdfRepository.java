@@ -15,13 +15,18 @@ public class RdfRepository {
 	private RdfRepository() {
 		repo = new SPARQLRepository("http://node000002.cluster.ids.unimaas.nl/repositories/ncats-red-kg", "http://node000002.cluster.ids.unimaas.nl/repositories/ncats-red-kg/statements");
 		repo.setUsernameAndPassword("import_user", "test");
-		repo.initialize();
 	}
 	
 	public String executeSparql(String sparql) {
-		List<BindingSet> results = Repositories.tupleQuery(repo, sparql, r -> QueryResults.asList(r));
+		List<BindingSet> results = Repositories.tupleQuery(getRepo(), sparql, r -> QueryResults.asList(r));
 
 		return results.toString();
+	}
+	
+	public SPARQLRepository getRepo() {
+		if(!repo.isInitialized())
+			repo.initialize();
+		return repo;
 	}
 	
 }

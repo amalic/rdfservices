@@ -3,17 +3,17 @@ package org.amalic.servicefromdata;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Repository
+@RestController
 public class GenericD2SController {
     static final String PATTERN = "/d2s/**";
     
     @Autowired
 	private RdfRepository repo;
 
-    @RequestMapping(PATTERN)
+    @RequestMapping("/d2s/**")
     public Object genericHandler(HttpServletRequest request) {
 //    	System.out.println(" - " + request.getQueryString());   	
     	String[] params = request.getRequestURI().substring(PATTERN.length()-2).split("/");
@@ -28,7 +28,6 @@ public class GenericD2SController {
     			"filter(!isblank(?o)) }";
     	
     	return repo.executeSparql(sparql);
-    	
     }
     
 }
