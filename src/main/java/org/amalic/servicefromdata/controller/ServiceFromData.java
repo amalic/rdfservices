@@ -50,7 +50,7 @@ public class ServiceFromData {
 	    			"        ?version dct:isVersionOf ?ds ; \n" + 
 	    			"            dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] . \n" + 
 	    			"}";
-    	
+    	response.setContentType(request.getHeader("accept"));
     	rdfRepo.executeSparql(sparql, response.getOutputStream(), ResultAs.fromContentType(request.getHeader("accept")));
     }
     
@@ -85,6 +85,7 @@ public class ServiceFromData {
     			"}"
     			, dataset);
     	
+    	response.setContentType(request.getHeader("accept"));
     	rdfRepo.executeSparql(sparql, response.getOutputStream(), ResultAs.fromContentType(request.getHeader("accept")));
     }
     
@@ -120,6 +121,7 @@ public class ServiceFromData {
     	sparql += " OFFSET " + ((page - 1L) * LIMIT)
     			+ " LIMIT " + LIMIT;
     	
+    	response.setContentType(request.getHeader("accept"));
     	rdfRepo.executeSparql(sparql, response.getOutputStream(), ResultAs.fromContentType(request.getHeader("accept")));
     }
     
@@ -152,6 +154,7 @@ public class ServiceFromData {
 				"}"
 				, source, className, id);
     	
+    	response.setContentType(request.getHeader("accept"));
     	rdfRepo.executeSparql(sparql, response.getOutputStream(), ResultAs.fromContentType(request.getHeader("accept")));
     }
     
