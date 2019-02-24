@@ -135,7 +135,7 @@ public class ServiceFromData {
     		) throws IOException {
     	String sparql=String.format(PREFIX
 				+ "SELECT ?dataset ?class ?id ?property ?value\n" + 
-				"WHER {\n" + 
+				"WHERE {\n" + 
 				"    ?ds a dctypes:Dataset ; idot:preferredPrefix ?dataset .\n" + 
 				"    ?version dct:isVersionOf ?ds ; dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] . \n" + 
 				"    FILTER(?dataset = \"%s\")\n" + 
