@@ -1,30 +1,31 @@
-package org.amalic.servicefromdata;
+package org.amalic.servicefromdata.controller;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/biolink")
-public class GenericD2SController {
+public class ServiceFromData {
+	private static final Logger logger = Logger.getLogger(ServiceFromData.class.getName());
     static final Long LIMIT = 1000L;
     
     @Autowired
 	private RdfRepository repo;
     
-    @RequestMapping("/datasets")
+    @RequestMapping(value = "/datasets", method = RequestMethod.GET)
     public void datasets(
     		HttpServletRequest request
     		, HttpServletResponse response
-    		, @RequestHeader("Accept") String accept
     		) throws IOException {
     	String sparql = 
     			"PREFIX void: <http://rdfs.org/ns/void#>\n"
@@ -40,17 +41,14 @@ public class GenericD2SController {
 	    			"            dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] . \n" + 
 	    			"}";
     	
-    	System.err.println(accept);
-    			
     	repo.executeSparql(sparql, response.getOutputStream(), ResultAs.CSV);
     }
     
-    @RequestMapping("/{dataset}")
+    @RequestMapping(value = "/{dataset}", method = RequestMethod.GET)
     public void classes(
     		HttpServletRequest request
     		, HttpServletResponse response
     		, @PathVariable String dataset
-    		, @RequestHeader("Accept") String accept
     		) throws IOException {
     	String sparql = String.format(
     			"PREFIX bl: <http://w3id.org/biolink/vocab/>\n" + 
@@ -84,14 +82,13 @@ public class GenericD2SController {
     	repo.executeSparql(sparql, response.getOutputStream(), ResultAs.TSV);
     }
     
-    @RequestMapping("/{dataset}/{class}")
+    @RequestMapping(value = "/{dataset}/{class}", method = RequestMethod.GET)
     public void datasetClass(
     		HttpServletRequest request
     		, HttpServletResponse response
     		, @PathVariable("dataset") String source
     		, @PathVariable("class") String className
     		, @RequestParam(required=false) Long page
-    		, @RequestHeader("Accept") String accept
     		) throws IOException {
     	String sparql=String.format(
     			"PREFIX bl: <http://w3id.org/biolink/vocab/>\n"
@@ -125,14 +122,13 @@ public class GenericD2SController {
     	repo.executeSparql(sparql, response.getOutputStream(), ResultAs.JSON);
     }
     
-    @RequestMapping("/{dataset}/{class}/{id}")
+    @RequestMapping(value = "/{dataset}/{class}/{id}", method = RequestMethod.GET)
     public void sourceClassId(
     		HttpServletRequest request
     		, HttpServletResponse response
     		, @PathVariable("dataset") String source
     		, @PathVariable("class") String className
     		, @PathVariable("id") String id
-    		, @RequestHeader("Accept") String accept
     		) throws IOException {
     	String sparql=String.format(
     			"PREFIX bl: <http://w3id.org/biolink/vocab/>\n"

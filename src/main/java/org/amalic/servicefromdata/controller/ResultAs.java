@@ -1,4 +1,4 @@
-package org.amalic.servicefromdata;
+package org.amalic.servicefromdata.controller;
 
 import java.io.OutputStream;
 

@@ -1,4 +1,6 @@
-package org.amalic.servicefromdata;
+package org.amalic.servicefromdata.controller;
+
+import java.util.logging.Logger;
 
 import javax.servlet.ServletOutputStream;
 
@@ -8,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class RdfRepository {
+	private static final Logger logger = Logger.getLogger(RdfRepository.class.getName());
+	
 	private SPARQLRepository repo;
 	
 	private RdfRepository() {
@@ -15,7 +19,7 @@ public class RdfRepository {
 	}
 	
 	public void executeSparql(String sparql, final ServletOutputStream outputStream, ResultAs resultType) {
-		System.out.println(sparql);
+		logger.info(sparql.replace("\n", " "));
 		Repositories.tupleQueryNoTransaction(getRepo(), sparql, resultType.getWriter(outputStream));
 	}
 	
