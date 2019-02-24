@@ -1,6 +1,7 @@
 package org.amalic.servicefromdata.controller;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +18,8 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/biolink")
 public class ServiceFromData {
-	//private static final Logger logger = Logger.getLogger(ServiceFromData.class.getName());
+	@SuppressWarnings("unused")
+	private static final Logger logger = Logger.getLogger(ServiceFromData.class.getName());
     static final Long LIMIT = 1000L;
     
     static final String PREFIX = 
@@ -63,8 +65,7 @@ public class ServiceFromData {
     		) throws IOException {
     	String sparql = String.format(PREFIX + 
     			"SELECT ?dataset ?class ?count\n" + 
-    			"WHERE\n" + 
-    			"{\n" + 
+    			"WHERE {\n" + 
     			"    {\n" + 
     			"        SELECT ?dataset ?classUri (count(?classUri) as ?count)  \n" + 
     			"        WHERE {\n" + 
@@ -100,8 +101,7 @@ public class ServiceFromData {
     		) throws IOException {
     	String sparql=String.format(PREFIX
 				+ "SELECT ?dataset ?class ?id\n" + 
-    			"WHERE \n" + 
-    			"{   \n" + 
+    			"WHERE {\n" + 
     			"    ?ds a dctypes:Dataset ; idot:preferredPrefix ?dataset .\n" + 
     			"    ?version dct:isVersionOf ?ds ; dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] . \n" + 
     			"    FILTER(?dataset = \"%s\")\n" + 
@@ -136,8 +136,7 @@ public class ServiceFromData {
     		) throws IOException {
     	String sparql=String.format(PREFIX
 				+ "SELECT ?dataset ?class ?id ?property ?value\n" + 
-				"WHERE\n" + 
-				"{\n" + 
+				"WHER {\n" + 
 				"    ?ds a dctypes:Dataset ; idot:preferredPrefix ?dataset .\n" + 
 				"    ?version dct:isVersionOf ?ds ; dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] . \n" + 
 				"    FILTER(?dataset = \"%s\")\n" + 
