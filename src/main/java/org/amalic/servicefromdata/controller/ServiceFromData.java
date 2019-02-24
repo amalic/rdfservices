@@ -50,8 +50,7 @@ public class ServiceFromData {
 	    			"        ?version dct:isVersionOf ?ds ; \n" + 
 	    			"            dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] . \n" + 
 	    			"}";
-    	response.setContentType(request.getHeader("accept"));
-    	rdfRepo.executeSparql(sparql, response.getOutputStream(), ResultAs.fromContentType(request.getHeader("accept")));
+    	handleRequestResponse(request, response, sparql);
     }
     
     @ApiOperation(value="This all classes for this particular data-set with instances having an id.")
@@ -85,8 +84,7 @@ public class ServiceFromData {
     			"}"
     			, dataset);
     	
-    	response.setContentType(request.getHeader("accept"));
-    	rdfRepo.executeSparql(sparql, response.getOutputStream(), ResultAs.fromContentType(request.getHeader("accept")));
+    	handleRequestResponse(request, response, sparql);
     }
     
     @ApiOperation(value="Returns all instances of a class. Default limit is 1000 instances per page. Use page parameter to load more.")
@@ -121,8 +119,7 @@ public class ServiceFromData {
     	sparql += " OFFSET " + ((page - 1L) * LIMIT)
     			+ " LIMIT " + LIMIT;
     	
-    	response.setContentType(request.getHeader("accept"));
-    	rdfRepo.executeSparql(sparql, response.getOutputStream(), ResultAs.fromContentType(request.getHeader("accept")));
+    	handleRequestResponse(request, response, sparql);
     }
     
     @ApiOperation(value="Loads all properties of a specific instance.")
@@ -154,8 +151,14 @@ public class ServiceFromData {
 				"}"
 				, source, className, id);
     	
-    	response.setContentType(request.getHeader("accept"));
-    	rdfRepo.executeSparql(sparql, response.getOutputStream(), ResultAs.fromContentType(request.getHeader("accept")));
+    	handleRequestResponse(request, response, sparql);
     }
+
+	private void handleRequestResponse(HttpServletRequest request, HttpServletResponse response, String sparql) throws IOException {
+		ResultAs resultAs = ResultAs.fromContentType(request.getHeader("accept"));
+		response.setContentType(resultAs.getContentType());
+    	rdfRepo.executeSparql(sparql, response.getOutputStream(), resultAs);
+	}
+    
     
 }

@@ -14,6 +14,11 @@ public enum ResultAs {
 	, XML
 	, JSON;
 	
+	private final static String CONTENT_TYPE_XML = "application/xml";
+	private final static String CONTENT_TYPE_JSON = "application/json";
+	private final static String CONTENT_TYPE_CSV = "text/csv";
+	private final static String CONTENT_TYPE_TSV = "text/tsv";
+	
 	public TupleQueryResultWriter getWriter(OutputStream out) {
 		switch(this) {
 		case CSV: return new SPARQLResultsCSVWriter(out);
@@ -25,16 +30,23 @@ public enum ResultAs {
 	}
 
 	public static ResultAs fromContentType(String accept) {
-		if("application/json".equals(accept))
-			return JSON;
-		else if("application/xml".equals(accept))
-			return XML;
-		else if ("text/csv".equals(accept))
-			return CSV;
-		else if ("text/tsv".equals(accept))
-			return TSV;
-		else
-			return JSON;
+		switch(accept) {
+		case CONTENT_TYPE_XML: return XML;
+		case CONTENT_TYPE_JSON: return JSON;
+		case CONTENT_TYPE_CSV: return CSV;
+		case CONTENT_TYPE_TSV: return TSV;
+		default: throw new IllegalStateException();
+		}
+	}
+	
+	public String getContentType() {
+		switch(this) {
+		case CSV: return CONTENT_TYPE_CSV;
+		case TSV: return CONTENT_TYPE_TSV;
+		case XML: return CONTENT_TYPE_XML; 
+		case JSON: return CONTENT_TYPE_JSON;
+		default: throw new IllegalStateException();
+		}
 	}
 
 }
