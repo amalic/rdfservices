@@ -9,10 +9,7 @@ docker run -it --rm -p 80:8080 servicefromdata
 ```
 
 ### Try it out: 
-http://localhost/biolink/drugbank/Drug
+http://localhost/
 
 ### Swagger-Apidoc:
 http://localhost/v2/api-docs
-
-### Swagger UI
-http://localhost/swagger-ui.html
