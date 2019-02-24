@@ -12,16 +12,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/biolink")
 public class ServiceFromData {
-//	private static final Logger logger = Logger.getLogger(ServiceFromData.class.getName());
+	//private static final Logger logger = Logger.getLogger(ServiceFromData.class.getName());
     static final Long LIMIT = 1000L;
     
     @Autowired
-	private RdfRepository repo;
+	private RdfRepository rdfRepo;
     
-    @RequestMapping(value = "/datasets", method = RequestMethod.GET)
+    @ApiOperation(value="This api call returns all datasets, which can be used as input for other services. Note that the first line in csv is the header.")
+    @RequestMapping(value = "/datasets", method = RequestMethod.GET, produces = {"application/json", "application/xml", "text/csv", "text/tsv"})
     public void datasets(
     		HttpServletRequest request
     		, HttpServletResponse response
@@ -40,10 +43,11 @@ public class ServiceFromData {
 	    			"            dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] . \n" + 
 	    			"}";
     	
-    	repo.executeSparql(sparql, response.getOutputStream(), ResultAs.JSON);
+    	rdfRepo.executeSparql(sparql, response.getOutputStream(), ResultAs.fromContentType(request.getHeader("accept")));
     }
     
-    @RequestMapping(value = "/{dataset}", method = RequestMethod.GET)
+    @ApiOperation(value="This all classes for this particular data-set with instances having an id.")
+    @RequestMapping(value = "/{dataset}", method = RequestMethod.GET, produces = {"application/json", "application/xml", "text/csv", "text/tsv"})
     public void classes(
     		HttpServletRequest request
     		, HttpServletResponse response
@@ -78,10 +82,11 @@ public class ServiceFromData {
     			"}"
     			, dataset);
     	
-    	repo.executeSparql(sparql, response.getOutputStream(), ResultAs.JSON);
+    	rdfRepo.executeSparql(sparql, response.getOutputStream(), ResultAs.fromContentType(request.getHeader("accept")));
     }
     
-    @RequestMapping(value = "/{dataset}/{class}", method = RequestMethod.GET)
+    @ApiOperation(value="Returns all instances of a class. Default limit is 1000 instances per page. Use page parameter to load more.")
+    @RequestMapping(value = "/{dataset}/{class}", method = RequestMethod.GET, produces = {"application/json", "application/xml", "text/csv", "text/tsv"})
     public void datasetClass(
     		HttpServletRequest request
     		, HttpServletResponse response
@@ -118,10 +123,11 @@ public class ServiceFromData {
     	sparql += " OFFSET " + ((page - 1L) * LIMIT)
     			+ " LIMIT " + LIMIT;
     	
-    	repo.executeSparql(sparql, response.getOutputStream(), ResultAs.JSON);
+    	rdfRepo.executeSparql(sparql, response.getOutputStream(), ResultAs.fromContentType(request.getHeader("accept")));
     }
     
-    @RequestMapping(value = "/{dataset}/{class}/{id}", method = RequestMethod.GET)
+    @ApiOperation(value="Loads all properties of a specific instance.")
+    @RequestMapping(value = "/{dataset}/{class}/{id}", method = RequestMethod.GET, produces = {"application/json", "application/xml", "text/csv", "text/tsv"})
     public void sourceClassId(
     		HttpServletRequest request
     		, HttpServletResponse response
@@ -155,7 +161,7 @@ public class ServiceFromData {
     					, className
     					, id);
     	
-    	repo.executeSparql(sparql, response.getOutputStream(), ResultAs.JSON);
+    	rdfRepo.executeSparql(sparql, response.getOutputStream(), ResultAs.fromContentType(request.getHeader("accept")));
     }
     
 }

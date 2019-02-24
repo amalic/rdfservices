@@ -24,4 +24,17 @@ public enum ResultAs {
 		}
 	}
 
+	public static ResultAs fromContentType(String accept) {
+		if("application/json".equals(accept))
+			return JSON;
+		else if("application/xml".equals(accept))
+			return XML;
+		else if ("text/csv".equals(accept))
+			return CSV;
+		else if ("text/tsv".equals(accept))
+			return TSV;
+		else
+			return JSON;
+	}
+
 }

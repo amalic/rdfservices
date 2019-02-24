@@ -6,20 +6,27 @@ import javax.servlet.ServletOutputStream;
 
 import org.eclipse.rdf4j.repository.sparql.SPARQLRepository;
 import org.eclipse.rdf4j.repository.util.Repositories;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component
 public class RdfRepository {
 	private static final Logger logger = Logger.getLogger(RdfRepository.class.getName());
+	@Autowired private Environment env;
 	
 	private SPARQLRepository repo;
 	
 	private RdfRepository() {
-		repo = new SPARQLRepository("http://graphdb.dumontierlab.com/repositories/ncats-red-kg");
+		String endpoint = System.getenv("ENDPOINT");
+		if(endpoint == null || endpoint.length()==0)
+			endpoint = env.getProperty("default-endpoint");
+		logger.info("ENDPOINT: " + endpoint);
+		repo = new SPARQLRepository(endpoint);
 	}
 	
 	public void executeSparql(String sparql, final ServletOutputStream outputStream, ResultAs resultType) {
-		logger.info(sparql.replace("\n", " "));
+		logger.fine(sparql.replace("\n", " "));
 		Repositories.tupleQueryNoTransaction(getRepo(), sparql, resultType.getWriter(outputStream));
 	}
 	
