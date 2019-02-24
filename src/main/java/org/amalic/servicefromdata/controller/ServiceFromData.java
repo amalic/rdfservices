@@ -20,6 +20,14 @@ public class ServiceFromData {
 	//private static final Logger logger = Logger.getLogger(ServiceFromData.class.getName());
     static final Long LIMIT = 1000L;
     
+    static final String PREFIX = 
+    		"PREFIX bl: <http://w3id.org/biolink/vocab/>\n"
+			+ "PREFIX void: <http://rdfs.org/ns/void#>\n"
+			+ "PREFIX dcat: <http://www.w3.org/ns/dcat#>\n"
+			+ "PREFIX dct: <http://purl.org/dc/terms/>\n"
+			+ "PREFIX idot: <http://identifiers.org/idot/>\n"
+			+ "PREFIX dctypes: <http://purl.org/dc/dcmitype/>\n";
+    
     @Autowired
 	private RdfRepository rdfRepo;
     
@@ -32,12 +40,8 @@ public class ServiceFromData {
     		, HttpServletResponse response
     		) throws IOException {
     	String sparql = 
-    			"PREFIX void: <http://rdfs.org/ns/void#>\n"
-    			+ "PREFIX dcat: <http://www.w3.org/ns/dcat#>\n"
-    			+ "PREFIX dct: <http://purl.org/dc/terms/>\n"
-    			+ "PREFIX idot: <http://identifiers.org/idot/>\n"
-    			+ "PREFIX dctypes: <http://purl.org/dc/dcmitype/>\n"
-    			+ "SELECT ?dataset\n" + 
+    			PREFIX +
+    				"SELECT ?dataset\n" + 
 	    			"WHERE {\n" + 
 	    			"        ?ds a dctypes:Dataset ;\n" + 
 	    			"            idot:preferredPrefix ?dataset .\n" + 
@@ -57,13 +61,7 @@ public class ServiceFromData {
     		, HttpServletResponse response
     		, @PathVariable String dataset
     		) throws IOException {
-    	String sparql = String.format(
-    			"PREFIX bl: <http://w3id.org/biolink/vocab/>\n" + 
-    			"PREFIX dctypes: <http://purl.org/dc/dcmitype/>\n" + 
-    			"PREFIX void: <http://rdfs.org/ns/void#>\n" + 
-    			"PREFIX dcat: <http://www.w3.org/ns/dcat#>\n" + 
-    			"PREFIX idot: <http://identifiers.org/idot/>\n" + 
-    			"PREFIX dct: <http://purl.org/dc/terms/>PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" + 
+    	String sparql = String.format(PREFIX + 
     			"SELECT ?dataset ?class ?count\n" + 
     			"WHERE\n" + 
     			"{\n" + 
@@ -100,28 +98,21 @@ public class ServiceFromData {
     		, @PathVariable("class") String className
     		, @RequestParam(required=false) Long page
     		) throws IOException {
-    	String sparql=String.format(
-    			"PREFIX bl: <http://w3id.org/biolink/vocab/>\n"
-    			+ "PREFIX void: <http://rdfs.org/ns/void#>\n"
-    			+ "PREFIX dcat: <http://www.w3.org/ns/dcat#>\n"
-    			+ "PREFIX dct: <http://purl.org/dc/terms/>\n"
-    			+ "PREFIX idot: <http://identifiers.org/idot/>\n"
-    			+ "PREFIX dctypes: <http://purl.org/dc/dcmitype/>\n"
-    			+ "SELECT ?dataset ?class ?id\n" + 
-	    			"WHERE \n" + 
-	    			"{   \n" + 
-	    			"    ?ds a dctypes:Dataset ; idot:preferredPrefix ?dataset .\n" + 
-	    			"    ?version dct:isVersionOf ?ds ; dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] . \n" + 
-	    			"    FILTER(?dataset = \"%s\")\n" + 
-	    			"    GRAPH ?graph \n" + 
-	    			"    {\n" + 
-	    			"        ?entityUri a ?class .\n" + 
-	    			"        ?entityUri a bl:%s .\n" + 
-	    			"        ?entityUri bl:id ?id\n" + 
-	    			"    }\n" + 
-	    			"}"
-				, source
-				, className);
+    	String sparql=String.format(PREFIX
+				+ "SELECT ?dataset ?class ?id\n" + 
+    			"WHERE \n" + 
+    			"{   \n" + 
+    			"    ?ds a dctypes:Dataset ; idot:preferredPrefix ?dataset .\n" + 
+    			"    ?version dct:isVersionOf ?ds ; dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] . \n" + 
+    			"    FILTER(?dataset = \"%s\")\n" + 
+    			"    GRAPH ?graph \n" + 
+    			"    {\n" + 
+    			"        ?entityUri a ?class .\n" + 
+    			"        ?entityUri a bl:%s .\n" + 
+    			"        ?entityUri bl:id ?id\n" + 
+    			"    }\n" + 
+    			"}"
+				, source, className);
     	
     	if(page==null || page < 1)
     		page = 1L;
@@ -143,31 +134,24 @@ public class ServiceFromData {
     		, @PathVariable("class") String className
     		, @PathVariable("id") String id
     		) throws IOException {
-    	String sparql=String.format(
-    			"PREFIX bl: <http://w3id.org/biolink/vocab/>\n"
-    					+ "PREFIX void: <http://rdfs.org/ns/void#>\n"
-    					+ "PREFIX dcat: <http://www.w3.org/ns/dcat#>\n"
-    					+ "PREFIX dct: <http://purl.org/dc/terms/>\n"
-    					+ "PREFIX idot: <http://identifiers.org/idot/>\n"
-    					+ "PREFIX dctypes: <http://purl.org/dc/dcmitype/>\n"
-    					+ "SELECT ?dataset ?class ?id ?property ?value\n" + 
-    					"WHERE\n" + 
-    					"{\n" + 
-    					"    ?ds a dctypes:Dataset ; idot:preferredPrefix ?dataset .\n" + 
-    					"    ?version dct:isVersionOf ?ds ; dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] . \n" + 
-    					"    FILTER(?dataset = \"%s\")\n" + 
-    					"    GRAPH ?graph\n" + 
-    					"    {\n" + 
-    					"        ?entityUri a bl:%s .\n" + 
-    					"        ?entityUri a ?class .\n" + 
-    					"        ?entityUri bl:id ?id .\n" + 
-    					"        ?entityUri ?property ?value .\n" + 
-    					"        FILTER(?id = \"%s\")\n" + 
-    					"    }\n" + 
-    					"}"
-    					, source
-    					, className
-    					, id);
+    	String sparql=String.format(PREFIX
+				+ "SELECT ?dataset ?class ?id ?property ?value\n" + 
+				"WHERE\n" + 
+				"{\n" + 
+				"    ?ds a dctypes:Dataset ; idot:preferredPrefix ?dataset .\n" + 
+				"    ?version dct:isVersionOf ?ds ; dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] . \n" + 
+				"    FILTER(?dataset = \"%s\")\n" + 
+				"    GRAPH ?graph\n" + 
+				"    {\n" + 
+				"        ?entityUri a bl:%s .\n" + 
+				"        ?entityUri a ?classUri .\n" + 
+				"        ?entityUri bl:id ?id .\n" + 
+				"        ?entityUri ?property ?value .\n" + 
+				"        FILTER(?id = \"%s\")\n" + 
+				"    }\n" + 
+				"    BIND(strafter(str(?classUri),\"http://w3id.org/biolink/vocab/\") as ?class)\n" +
+				"}"
+				, source, className, id);
     	
     	rdfRepo.executeSparql(sparql, response.getOutputStream(), ResultAs.fromContentType(request.getHeader("accept")));
     }

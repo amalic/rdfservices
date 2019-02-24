@@ -1,9 +1,12 @@
 package org.amalic.servicefromdata.controller;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletOutputStream;
 
+import org.eclipse.rdf4j.query.BindingSet;
+import org.eclipse.rdf4j.query.QueryResults;
 import org.eclipse.rdf4j.repository.sparql.SPARQLRepository;
 import org.eclipse.rdf4j.repository.util.Repositories;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,10 @@ public class RdfRepository {
 	public void executeSparql(String sparql, final ServletOutputStream outputStream, ResultAs resultType) {
 		logger.fine(sparql.replace("\n", " "));
 		Repositories.tupleQueryNoTransaction(getRepo(), sparql, resultType.getWriter(outputStream));
+	}
+	
+	public List<BindingSet> executeSparql(String sparql) {
+		 return Repositories.tupleQueryNoTransaction(getRepo(), sparql, iter -> QueryResults.asList(iter));
 	}
 	
 	public SPARQLRepository getRepo() {
