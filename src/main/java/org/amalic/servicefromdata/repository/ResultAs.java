@@ -1,4 +1,4 @@
-package org.amalic.servicefromdata.controller;
+package org.amalic.servicefromdata.repository;
 
 import java.io.OutputStream;
 
@@ -19,6 +19,9 @@ public enum ResultAs {
 	private final static String CONTENT_TYPE_CSV = "text/csv";
 	private final static String CONTENT_TYPE_TSV = "text/tsv";
 	
+	private final static String[] CONTENT_TYPES = new String[]{
+			CONTENT_TYPE_XML, CONTENT_TYPE_JSON, CONTENT_TYPE_CSV, CONTENT_TYPE_TSV};
+	
 	public TupleQueryResultWriter getWriter(OutputStream out) {
 		switch(this) {
 		case CSV: return new SPARQLResultsCSVWriter(out);
@@ -35,7 +38,7 @@ public enum ResultAs {
 		case CONTENT_TYPE_JSON: return JSON;
 		case CONTENT_TYPE_CSV: return CSV;
 		case CONTENT_TYPE_TSV: return TSV;
-		default: throw new IllegalStateException();
+		default: throw new IllegalStateException("Unknown accept header. Try one of these " + CONTENT_TYPES.toString());
 		}
 	}
 	

@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.amalic.servicefromdata.repository.RdfRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,10 +34,10 @@ public class ServiceFromData {
     @Autowired
 	private RdfRepository rdfRepo;
     
-    @ApiOperation(value="This api call returns all datasets, which can be used as input for other services. Note that the first line in csv is the header.")
     @RequestMapping(value = "/datasets"
     	, method = RequestMethod.GET
     	, produces = {"application/json", "application/xml", "text/csv", "text/tsv"})
+    @ApiOperation(value="This api call returns all datasets, which can be used as input for other services. Note that the first line in csv is the header.")
     public void datasets(
     		HttpServletRequest request
     		, HttpServletResponse response
@@ -53,10 +54,10 @@ public class ServiceFromData {
     	rdfRepo.executeSparql(query, request, response);
     }
     
-    @ApiOperation(value="This all classes for this particular data-set with instances having an id.")
     @RequestMapping(value = "/query/{dataset}"
 	    , method = RequestMethod.GET
 	    , produces = {"application/json", "application/xml", "text/csv", "text/tsv"})
+    @ApiOperation(value="This all classes for this particular data-set with instances having an id.")
     public void classes(
     		HttpServletRequest request
     		, HttpServletResponse response
@@ -87,10 +88,10 @@ public class ServiceFromData {
     	rdfRepo.executeSparql(query, request, response);
     }
     
-    @ApiOperation(value="Returns all instances of a class. Default limit is 1000 instances per page. Use page parameter to load more.")
     @RequestMapping(value = "/query/{dataset}/{class}"
     	, method = RequestMethod.GET
     	, produces = {"application/json", "application/xml", "text/csv", "text/tsv"})
+    @ApiOperation(value="Returns all instances of a class. Default limit is 1000 instances per page. Use page parameter to load more.")
     public void datasetClass(
     		HttpServletRequest request
     		, HttpServletResponse response
@@ -122,10 +123,10 @@ public class ServiceFromData {
     	rdfRepo.executeSparql(query, request, response);
     }
     
-    @ApiOperation(value="Loads all properties of a specific instance.")
     @RequestMapping(value = "/query/{dataset}/{class}/{id}"
     	, method = RequestMethod.GET
     	, produces = {"application/json", "application/xml", "text/csv", "text/tsv"})
+    @ApiOperation(value="Loads all properties of a specific instance.")
     public void sourceClassId(
     		HttpServletRequest request
     		, HttpServletResponse response

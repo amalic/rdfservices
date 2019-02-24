@@ -1,4 +1,4 @@
-package org.amalic.servicefromdata.controller.config;
+package org.amalic.servicefromdata.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

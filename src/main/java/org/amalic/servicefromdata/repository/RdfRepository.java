@@ -1,4 +1,4 @@
-package org.amalic.servicefromdata.controller;
+package org.amalic.servicefromdata.repository;
 
 import java.io.IOException;
 import java.util.List;
@@ -31,6 +31,12 @@ public class RdfRepository {
 		repo = new SPARQLRepository(endpoint);
 	}
 	
+	public void executeSparql(String sparql, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		ResultAs resultAs = ResultAs.fromContentType(request.getHeader("accept"));
+		response.setContentType(resultAs.getContentType());
+		executeSparql(sparql, response.getOutputStream(), resultAs);
+	}
+	
 	public void executeSparql(String sparql, final ServletOutputStream outputStream, ResultAs resultType) {
 		logger.fine(sparql.replace("\n", " "));
 		Repositories.tupleQueryNoTransaction(getRepo(), sparql, resultType.getWriter(outputStream));
@@ -44,12 +50,6 @@ public class RdfRepository {
 		if(!repo.isInitialized())
 			repo.initialize();
 		return repo;
-	}
-
-	public void executeSparql(String sparql, HttpServletRequest request, HttpServletResponse response) throws IOException {
-		ResultAs resultAs = ResultAs.fromContentType(request.getHeader("accept"));
-		response.setContentType(resultAs.getContentType());
-    	executeSparql(sparql, response.getOutputStream(), resultAs);
 	}
 	
 }
