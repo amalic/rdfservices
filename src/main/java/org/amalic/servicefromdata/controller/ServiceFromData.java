@@ -47,14 +47,14 @@ public class ServiceFromData {
 	    			"WHERE {\n" + 
 	    			"        ?ds a dctypes:Dataset ;\n" + 
 	    			"            idot:preferredPrefix ?dataset .\n" + 
-	    			"        ?version dct:isVersionOf ?ds ; \n" + 
+	    			"        ?version dct:isVersionOf ?ds ;\n" + 
 	    			"            dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] . \n" + 
 	    			"}";
     	rdfRepo.executeSparql(query, request, response);
     }
     
     @ApiOperation(value="This all classes for this particular data-set with instances having an id.")
-    @RequestMapping(value = "/{dataset}"
+    @RequestMapping(value = "/query/{dataset}"
 	    , method = RequestMethod.GET
 	    , produces = {"application/json", "application/xml", "text/csv", "text/tsv"})
     public void classes(
@@ -88,7 +88,7 @@ public class ServiceFromData {
     }
     
     @ApiOperation(value="Returns all instances of a class. Default limit is 1000 instances per page. Use page parameter to load more.")
-    @RequestMapping(value = "/{dataset}/{class}"
+    @RequestMapping(value = "/query/{dataset}/{class}"
     	, method = RequestMethod.GET
     	, produces = {"application/json", "application/xml", "text/csv", "text/tsv"})
     public void datasetClass(
@@ -102,7 +102,7 @@ public class ServiceFromData {
 				+ "SELECT ?dataset ?class ?id\n" + 
     			"WHERE {\n" + 
     			"    ?ds a dctypes:Dataset ; idot:preferredPrefix ?dataset .\n" + 
-    			"    ?version dct:isVersionOf ?ds ; dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] . \n" + 
+    			"    ?version dct:isVersionOf ?ds ; dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] .\n" + 
     			"    FILTER(?dataset = \"%s\")\n" + 
     			"    GRAPH ?graph \n" + 
     			"    {\n" + 
@@ -123,7 +123,7 @@ public class ServiceFromData {
     }
     
     @ApiOperation(value="Loads all properties of a specific instance.")
-    @RequestMapping(value = "/{dataset}/{class}/{id}"
+    @RequestMapping(value = "/query/{dataset}/{class}/{id}"
     	, method = RequestMethod.GET
     	, produces = {"application/json", "application/xml", "text/csv", "text/tsv"})
     public void sourceClassId(
@@ -137,7 +137,7 @@ public class ServiceFromData {
 				+ "SELECT ?dataset ?class ?id ?property ?value\n" + 
 				"WHERE {\n" + 
 				"    ?ds a dctypes:Dataset ; idot:preferredPrefix ?dataset .\n" + 
-				"    ?version dct:isVersionOf ?ds ; dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] . \n" + 
+				"    ?version dct:isVersionOf ?ds ; dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] .\n" + 
 				"    FILTER(?dataset = \"%s\")\n" + 
 				"    GRAPH ?graph\n" + 
 				"    {\n" + 
