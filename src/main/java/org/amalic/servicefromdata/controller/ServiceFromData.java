@@ -22,7 +22,7 @@ public class ServiceFromData {
 	private static final Logger logger = Logger.getLogger(ServiceFromData.class.getName());
     static final Long LIMIT = 1000L;
     
-    static final String PREFIX = 
+    static final String PREFIXES = 
     		"PREFIX bl: <http://w3id.org/biolink/vocab/>\n"
 			+ "PREFIX void: <http://rdfs.org/ns/void#>\n"
 			+ "PREFIX dcat: <http://www.w3.org/ns/dcat#>\n"
@@ -41,8 +41,8 @@ public class ServiceFromData {
     		HttpServletRequest request
     		, HttpServletResponse response
     		) throws IOException {
-    	String sparql = 
-    			PREFIX +
+    	String query = 
+    			PREFIXES +
     				"SELECT ?dataset\n" + 
 	    			"WHERE {\n" + 
 	    			"        ?ds a dctypes:Dataset ;\n" + 
@@ -50,7 +50,7 @@ public class ServiceFromData {
 	    			"        ?version dct:isVersionOf ?ds ; \n" + 
 	    			"            dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] . \n" + 
 	    			"}";
-    	handleRequestResponse(request, response, sparql);
+    	rdfRepo.executeSparql(query, request, response);
     }
     
     @ApiOperation(value="This all classes for this particular data-set with instances having an id.")
@@ -62,7 +62,7 @@ public class ServiceFromData {
     		, HttpServletResponse response
     		, @PathVariable String dataset
     		) throws IOException {
-    	String sparql = String.format(PREFIX + 
+    	String query = String.format(PREFIXES + 
     			"SELECT ?dataset ?class ?count\n" + 
     			"WHERE {\n" + 
     			"    {\n" + 
@@ -84,7 +84,7 @@ public class ServiceFromData {
     			"}"
     			, dataset);
     	
-    	handleRequestResponse(request, response, sparql);
+    	rdfRepo.executeSparql(query, request, response);
     }
     
     @ApiOperation(value="Returns all instances of a class. Default limit is 1000 instances per page. Use page parameter to load more.")
@@ -98,7 +98,7 @@ public class ServiceFromData {
     		, @PathVariable("class") String className
     		, @RequestParam(required=false) Long page
     		) throws IOException {
-    	String sparql=String.format(PREFIX
+    	String query=String.format(PREFIXES
 				+ "SELECT ?dataset ?class ?id\n" + 
     			"WHERE {\n" + 
     			"    ?ds a dctypes:Dataset ; idot:preferredPrefix ?dataset .\n" + 
@@ -116,10 +116,10 @@ public class ServiceFromData {
     	if(page==null || page < 1)
     		page = 1L;
     	
-    	sparql += " OFFSET " + ((page - 1L) * LIMIT)
+    	query += " OFFSET " + ((page - 1L) * LIMIT)
     			+ " LIMIT " + LIMIT;
     	
-    	handleRequestResponse(request, response, sparql);
+    	rdfRepo.executeSparql(query, request, response);
     }
     
     @ApiOperation(value="Loads all properties of a specific instance.")
@@ -133,7 +133,7 @@ public class ServiceFromData {
     		, @PathVariable("class") String className
     		, @PathVariable("id") String id
     		) throws IOException {
-    	String sparql=String.format(PREFIX
+    	String query=String.format(PREFIXES
 				+ "SELECT ?dataset ?class ?id ?property ?value\n" + 
 				"WHERE {\n" + 
 				"    ?ds a dctypes:Dataset ; idot:preferredPrefix ?dataset .\n" + 
@@ -151,14 +151,7 @@ public class ServiceFromData {
 				"}"
 				, source, className, id);
     	
-    	handleRequestResponse(request, response, sparql);
+    	rdfRepo.executeSparql(query, request, response);
     }
 
-	private void handleRequestResponse(HttpServletRequest request, HttpServletResponse response, String sparql) throws IOException {
-		ResultAs resultAs = ResultAs.fromContentType(request.getHeader("accept"));
-		response.setContentType(resultAs.getContentType());
-    	rdfRepo.executeSparql(sparql, response.getOutputStream(), resultAs);
-	}
-    
-    
 }

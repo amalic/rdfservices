@@ -1,9 +1,12 @@
 package org.amalic.servicefromdata.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.QueryResults;
@@ -41,6 +44,12 @@ public class RdfRepository {
 		if(!repo.isInitialized())
 			repo.initialize();
 		return repo;
+	}
+
+	public void executeSparql(String sparql, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		ResultAs resultAs = ResultAs.fromContentType(request.getHeader("accept"));
+		response.setContentType(resultAs.getContentType());
+    	executeSparql(sparql, response.getOutputStream(), resultAs);
 	}
 	
 }
