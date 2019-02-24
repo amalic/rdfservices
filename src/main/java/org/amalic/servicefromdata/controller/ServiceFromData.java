@@ -40,7 +40,7 @@ public class ServiceFromData {
 	    			"            dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] . \n" + 
 	    			"}";
     	
-    	repo.executeSparql(sparql, response.getOutputStream(), ResultAs.CSV);
+    	repo.executeSparql(sparql, response.getOutputStream(), ResultAs.JSON);
     }
     
     @RequestMapping(value = "/{dataset}", method = RequestMethod.GET)
@@ -78,7 +78,7 @@ public class ServiceFromData {
     			"}"
     			, dataset);
     	
-    	repo.executeSparql(sparql, response.getOutputStream(), ResultAs.TSV);
+    	repo.executeSparql(sparql, response.getOutputStream(), ResultAs.JSON);
     }
     
     @RequestMapping(value = "/{dataset}/{class}", method = RequestMethod.GET)
@@ -155,7 +155,7 @@ public class ServiceFromData {
     					, className
     					, id);
     	
-    	repo.executeSparql(sparql, response.getOutputStream(), ResultAs.XML);
+    	repo.executeSparql(sparql, response.getOutputStream(), ResultAs.JSON);
     }
     
 }
