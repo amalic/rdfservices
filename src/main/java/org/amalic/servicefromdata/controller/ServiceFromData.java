@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/biolink")
+@RequestMapping("/biolink/v1")
 public class ServiceFromData {
 	@SuppressWarnings("unused")
 	private static final Logger logger = Logger.getLogger(ServiceFromData.class.getName());
