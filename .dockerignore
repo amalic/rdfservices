@@ -1,2 +1,9 @@
 Dockerfile
 README.MD
+.settings
+target
+.classpath
+.project
+.vscode
+.gitignore
+update_from_git.sh
