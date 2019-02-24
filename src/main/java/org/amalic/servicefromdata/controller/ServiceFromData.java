@@ -1,7 +1,6 @@
 package org.amalic.servicefromdata.controller;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/biolink")
 public class ServiceFromData {
-	private static final Logger logger = Logger.getLogger(ServiceFromData.class.getName());
+//	private static final Logger logger = Logger.getLogger(ServiceFromData.class.getName());
     static final Long LIMIT = 1000L;
     
     @Autowired
