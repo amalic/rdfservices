@@ -29,8 +29,7 @@ public class BiolinkService {
     	, method = RequestMethod.GET
     	, produces = {"application/json", "application/xml", "text/csv", "text/tsv"})
     @ApiOperation(value="This api call returns all datasets, which can be used as input for other services. Note that the first line in csv is the header.")
-    public void datasets(HttpServletRequest request, HttpServletResponse response
-    		) throws IOException {
+    public void datasets(HttpServletRequest request, HttpServletResponse response) throws IOException {
     	rdfRepo.handleApiCall(BiolinkQueryBuilder.datasets(), request, response);
     }
     
@@ -49,7 +48,7 @@ public class BiolinkService {
     	, produces = {"application/json", "application/xml", "text/csv", "text/tsv"})
     @ApiOperation(value="Returns all instances of a class. Default limit is 1000 instances per page. Use page parameter to load more.")
     public void datasetClass(HttpServletRequest request, HttpServletResponse response
-    		, @PathVariable("dataset") String dataset
+    		, @PathVariable String dataset
     		, @PathVariable("class") String className
     		, @RequestParam(required=false) Long page
     		) throws IOException {
@@ -61,9 +60,9 @@ public class BiolinkService {
     	, produces = {"application/json", "application/xml", "text/csv", "text/tsv"})
     @ApiOperation(value="Loads all properties of a specific instance.")
     public void datasetClassId(HttpServletRequest request, HttpServletResponse response
-    		, @PathVariable("dataset") String dataset
+    		, @PathVariable String dataset
     		, @PathVariable("class") String className
-    		, @PathVariable("id") String id
+    		, @PathVariable String id
     		) throws IOException {
     	rdfRepo.handleApiCall(BiolinkQueryBuilder.datasetClassId(dataset, className, id), request, response);
     }
