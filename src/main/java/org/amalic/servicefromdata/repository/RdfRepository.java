@@ -1,10 +1,10 @@
 package org.amalic.servicefromdata.repository;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,7 +31,7 @@ public class RdfRepository {
 		executeSparql(query, response.getOutputStream(), resultAs);
 	}
 
-	public void executeSparql(String query, final ServletOutputStream outputStream, ResultAs resultAs) {
+	public void executeSparql(String query, final OutputStream outputStream, ResultAs resultAs) {
 		logger.fine(query.trim().replaceAll("\\s+", " "));
 		Repository repo = getRepo();
 		try {
