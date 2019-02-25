@@ -20,7 +20,7 @@ public class BiolinkQueryBuilder {
 				+ "  idot:preferredPrefix ?dataset .\n" 
 				+ "  ?version dct:isVersionOf ?ds ;\n" 
 				+ "  dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] . \n" + 
-	    		"}";
+	    		"}\n";
 	}
 	
 	private static final String GRAPH_FROM_DATASET_PART = 
