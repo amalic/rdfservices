@@ -10,10 +10,10 @@ import org.eclipse.rdf4j.query.resultio.text.csv.SPARQLResultsCSVWriter;
 import org.eclipse.rdf4j.query.resultio.text.tsv.SPARQLResultsTSVWriter;
 
 public enum ResultAs {
-	CSV
-	, TSV
-	, XML
-	, JSON;
+	XML
+	, JSON
+	, CSV
+	, TSV;
 	
 	private final static String CONTENT_TYPE_XML = "application/xml";
 	private final static String CONTENT_TYPE_JSON = "application/json";
@@ -25,10 +25,10 @@ public enum ResultAs {
 	
 	public TupleQueryResultWriter getWriter(OutputStream out) {
 		switch(this) {
-		case CSV: return new SPARQLResultsCSVWriter(out);
-		case TSV: return new SPARQLResultsTSVWriter(out);
 		case XML: return new SPARQLResultsXMLWriter(out); 
 		case JSON: return new SPARQLResultsJSONWriter(out);
+		case CSV: return new SPARQLResultsCSVWriter(out);
+		case TSV: return new SPARQLResultsTSVWriter(out);
 		default: throw new IllegalStateException();
 		}
 	}
@@ -45,10 +45,10 @@ public enum ResultAs {
 	
 	public String getContentType() {
 		switch(this) {
-		case CSV: return CONTENT_TYPE_CSV;
-		case TSV: return CONTENT_TYPE_TSV;
 		case XML: return CONTENT_TYPE_XML; 
 		case JSON: return CONTENT_TYPE_JSON;
+		case CSV: return CONTENT_TYPE_CSV;
+		case TSV: return CONTENT_TYPE_TSV;
 		default: throw new IllegalStateException();
 		}
 	}

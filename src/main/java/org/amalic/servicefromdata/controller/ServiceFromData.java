@@ -42,16 +42,16 @@ public class ServiceFromData {
     		HttpServletRequest request
     		, HttpServletResponse response
     		) throws IOException {
-    	String query = 
-    			PREFIXES +
-    				"SELECT ?dataset\n" + 
-	    			"WHERE {\n" + 
-	    			"        ?ds a dctypes:Dataset ;\n" + 
-	    			"            idot:preferredPrefix ?dataset .\n" + 
-	    			"        ?version dct:isVersionOf ?ds ;\n" + 
-	    			"            dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] . \n" + 
-	    			"}";
-    	rdfRepo.executeSparql(query, request, response);
+    	String query = PREFIXES +
+    			"SELECT ?dataset\n" + 
+	    		"WHERE {\n" + 
+	    		"  ?ds a dctypes:Dataset ;\n" + 
+	    		"  idot:preferredPrefix ?dataset .\n" + 
+	    		"  ?version dct:isVersionOf ?ds ;\n" + 
+	    		"  dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] . \n" + 
+	    		"}";
+    	
+    	rdfRepo.handleApiCall(query, request, response);
     }
     
     @RequestMapping(value = "/query/{dataset}"
@@ -66,26 +66,26 @@ public class ServiceFromData {
     	String query = String.format(PREFIXES + 
     			"SELECT ?dataset ?class ?count\n" + 
     			"WHERE {\n" + 
-    			"    {\n" + 
-    			"        SELECT ?dataset ?classUri (count(?classUri) as ?count)  \n" + 
-    			"        WHERE {\n" + 
-    			"            ?ds a dctypes:Dataset ; idot:preferredPrefix ?dataset .\n" + 
-    			"            ?version dct:isVersionOf ?ds ; dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] . \n" + 
-    			"            FILTER(?dataset = \"%s\")\n" + 
-    			"            graph ?graph {\n" + 
-    			"                [] a ?classUri ;\n" + 
-    			"                   bl:id ?id .\n" +
-    			"            }\n" + 
-    			"        }\n" + 
-    			"        group by ?dataset ?classUri\n" + 
-    			"        order by desc(?count)\n" + 
+    			"  {\n" + 
+    			"    SELECT ?dataset ?classUri (count(?classUri) as ?count)  \n" + 
+    			"    WHERE {\n" + 
+    			"      ?ds a dctypes:Dataset ; idot:preferredPrefix ?dataset .\n" + 
+    			"      ?version dct:isVersionOf ?ds ; dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] . \n" + 
+    			"      FILTER(?dataset = \"%s\")\n" + 
+    			"      graph ?graph {\n" + 
+    			"        [] a ?classUri ;\n" + 
+    			"        bl:id ?id .\n" +
+    			"      }\n" + 
     			"    }\n" + 
-    			"    BIND(strafter(str(?classUri),\"http://w3id.org/biolink/vocab/\") as ?class)\n" +
-    			"    FILTER(strlen(?class) > 0)\n" + 
+    			"    group by ?dataset ?classUri\n" + 
+    			"    order by desc(?count)\n" + 
+    			"  }\n" + 
+    			"  BIND(strafter(str(?classUri),\"http://w3id.org/biolink/vocab/\") as ?class)\n" +
+    			"  FILTER(strlen(?class) > 0)\n" + 
     			"}"
     			, dataset);
     	
-    	rdfRepo.executeSparql(query, request, response);
+    	rdfRepo.handleApiCall(query, request, response);
     }
     
     @RequestMapping(value = "/query/{dataset}/{class}"
@@ -99,28 +99,27 @@ public class ServiceFromData {
     		, @PathVariable("class") String className
     		, @RequestParam(required=false) Long page
     		) throws IOException {
-    	String query=String.format(PREFIXES
-				+ "SELECT ?dataset ?class ?id\n" + 
+    	String query=String.format(PREFIXES	+ 
+    			"SELECT ?dataset ?class ?id\n" + 
     			"WHERE {\n" + 
-    			"    ?ds a dctypes:Dataset ; idot:preferredPrefix ?dataset .\n" + 
-    			"    ?version dct:isVersionOf ?ds ; dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] .\n" + 
-    			"    FILTER(?dataset = \"%s\")\n" + 
-    			"    GRAPH ?graph \n" + 
-    			"    {\n" + 
-    			"        ?entityUri a ?class .\n" + 
-    			"        ?entityUri a bl:%s .\n" + 
-    			"        ?entityUri bl:id ?id\n" + 
-    			"    }\n" + 
+    			"  ?ds a dctypes:Dataset ; idot:preferredPrefix ?dataset .\n" + 
+    			"  ?version dct:isVersionOf ?ds ; dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] .\n" + 
+    			"  FILTER(?dataset = \"%s\")\n" + 
+    			"  GRAPH ?graph {\n" + 
+    			"    ?entityUri a ?class .\n" + 
+    			"    ?entityUri a bl:%s .\n" + 
+    			"    ?entityUri bl:id ?id\n" + 
+    			"  }\n" + 
     			"}"
 				, source, className);
     	
-    	if(page==null || page < 1)
+    	if(page==null || page < 1L)
     		page = 1L;
     	
-    	query += " OFFSET " + ((page - 1L) * LIMIT)
+    	query += (page > 1 ? " OFFSET " + ((page - 1L) * LIMIT) : "")
     			+ " LIMIT " + LIMIT;
     	
-    	rdfRepo.executeSparql(query, request, response);
+    	rdfRepo.handleApiCall(query, request, response);
     }
     
     @RequestMapping(value = "/query/{dataset}/{class}/{id}"
@@ -134,25 +133,24 @@ public class ServiceFromData {
     		, @PathVariable("class") String className
     		, @PathVariable("id") String id
     		) throws IOException {
-    	String query=String.format(PREFIXES
-				+ "SELECT ?dataset ?class ?id ?property ?value\n" + 
+    	String query=String.format(PREFIXES + 
+				"SELECT ?dataset ?class ?id ?property ?value\n" + 
 				"WHERE {\n" + 
-				"    ?ds a dctypes:Dataset ; idot:preferredPrefix ?dataset .\n" + 
-				"    ?version dct:isVersionOf ?ds ; dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] .\n" + 
-				"    FILTER(?dataset = \"%s\")\n" + 
-				"    GRAPH ?graph\n" + 
-				"    {\n" + 
-				"        ?entityUri a bl:%s .\n" + 
-				"        ?entityUri a ?classUri .\n" + 
-				"        ?entityUri bl:id ?id .\n" + 
-				"        ?entityUri ?property ?value .\n" + 
-				"        FILTER(?id = \"%s\")\n" + 
-				"    }\n" + 
-				"    BIND(strafter(str(?classUri),\"http://w3id.org/biolink/vocab/\") as ?class)\n" +
+				"  ?ds a dctypes:Dataset ; idot:preferredPrefix ?dataset .\n" + 
+				"  ?version dct:isVersionOf ?ds ; dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] .\n" + 
+				"  FILTER(?dataset = \"%s\")\n" + 
+				"  GRAPH ?graph {\n" + 
+				"    ?entityUri a bl:%s .\n" + 
+				"    ?entityUri a ?classUri .\n" + 
+				"    ?entityUri bl:id ?id .\n" + 
+				"    ?entityUri ?property ?value .\n" + 
+				"    FILTER(?id = \"%s\")\n" + 
+				"  }\n" + 
+				"  BIND(strafter(str(?classUri),\"http://w3id.org/biolink/vocab/\") as ?class)\n" +
 				"}"
 				, source, className, id);
     	
-    	rdfRepo.executeSparql(query, request, response);
+    	rdfRepo.handleApiCall(query, request, response);
     }
 
 }
