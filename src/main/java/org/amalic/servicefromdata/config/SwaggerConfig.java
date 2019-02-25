@@ -19,7 +19,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
 	@Bean
 	public Docket productApi() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
-				.apis(RequestHandlerSelectors.basePackage("org.amalic.servicefromdata.controller")).build();
+				.apis(RequestHandlerSelectors.basePackage("org.amalic.servicefromdata.service")).build();
 	}
 
 	@Override
