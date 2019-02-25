@@ -1,6 +1,7 @@
 package org.amalic.servicefromdata.repository;
 
 import java.io.OutputStream;
+import java.util.Arrays;
 
 import org.eclipse.rdf4j.query.resultio.TupleQueryResultWriter;
 import org.eclipse.rdf4j.query.resultio.sparqljson.SPARQLResultsJSONWriter;
@@ -38,7 +39,7 @@ public enum ResultAs {
 		case CONTENT_TYPE_JSON: return JSON;
 		case CONTENT_TYPE_CSV: return CSV;
 		case CONTENT_TYPE_TSV: return TSV;
-		default: throw new IllegalStateException("Unknown accept header. Try one of these " + CONTENT_TYPES.toString());
+		default: throw new IllegalStateException("Unknown accept header. Try one of these " + Arrays.toString(CONTENT_TYPES));
 		}
 	}
 	
