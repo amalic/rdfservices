@@ -13,17 +13,12 @@ import org.eclipse.rdf4j.query.QueryResults;
 import org.eclipse.rdf4j.repository.Repository;
 import org.eclipse.rdf4j.repository.sparql.SPARQLRepository;
 import org.eclipse.rdf4j.repository.util.Repositories;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component
 public class RdfRepository {
 	private static final Logger logger = Logger.getLogger(RdfRepository.class.getName());
-	
-	@Autowired
-	private Environment env;
 	
 	@Value("${default.endpoint}")
 	private String defaultEndpoint;
