@@ -10,26 +10,25 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.QueryResults;
+import org.eclipse.rdf4j.repository.Repository;
 import org.eclipse.rdf4j.repository.sparql.SPARQLRepository;
 import org.eclipse.rdf4j.repository.util.Repositories;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component
 public class RdfRepository {
 	private static final Logger logger = Logger.getLogger(RdfRepository.class.getName());
-	@Autowired private Environment env;
+	
+	@Autowired
+	private Environment env;
+	
+	@Value("${default.endpoint}")
+	private String defaultEndpoint;
 	
 	private SPARQLRepository repo;
-	
-	private RdfRepository() {
-		String endpoint = System.getenv("ENDPOINT");
-		if(endpoint == null || endpoint.length()==0)
-			endpoint = env.getProperty("default-endpoint");
-		logger.info("ENDPOINT: " + endpoint);
-		repo = new SPARQLRepository(endpoint);
-	}
 	
 	public void executeSparql(String sparql, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		ResultAs resultAs = ResultAs.fromContentType(request.getHeader("accept"));
@@ -39,7 +38,13 @@ public class RdfRepository {
 	
 	public void executeSparql(String sparql, final ServletOutputStream outputStream, ResultAs resultType) {
 		logger.fine(sparql.replace("\n", " "));
-		Repositories.tupleQueryNoTransaction(getRepo(), sparql, resultType.getWriter(outputStream));
+		Repository repo = getRepo();
+		try {
+			Repositories.tupleQueryNoTransaction(repo, sparql, resultType.getWriter(outputStream));
+		} finally {
+			repo.getConnection().close();
+		}
+		
 	}
 	
 	public List<BindingSet> executeSparql(String sparql) {
@@ -47,8 +52,17 @@ public class RdfRepository {
 	}
 	
 	public SPARQLRepository getRepo() {
-		if(!repo.isInitialized())
+		if(repo==null) {
+			String endpoint = System.getenv("ENDPOINT");
+			if(endpoint == null || endpoint.length()==0)
+				endpoint = defaultEndpoint;
+			logger.info("ENDPOINT: " + endpoint);
+			repo = new SPARQLRepository(endpoint);
+		}
+		if(!repo.isInitialized()) {
 			repo.initialize();
+			logger.info("Repository initialized");
+		}
 		return repo;
 	}
 	
