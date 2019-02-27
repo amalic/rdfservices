@@ -27,7 +27,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
 			.apiInfo(new ApiInfoBuilder()
 				.title("Services From Data")
 				.contact(new Contact(
-					"Alexander Malic - Institute of Data Science - Maastricht University"
+					"Alexander Malic - Maastricht University - Institute of Data Science"
 					, "https://maastrichtuniversity.nl/ids"
 					, "alexander.malic@maastrichtuniversity.nl"))
 				.license("Attribution 4.0 International (CC BY 4.0)")
