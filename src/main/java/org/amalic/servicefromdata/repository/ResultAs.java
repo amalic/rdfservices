@@ -15,10 +15,10 @@ public enum ResultAs {
 	, CSV
 	, TSV;
 	
-	private final static String CONTENT_TYPE_XML = "application/xml";
-	private final static String CONTENT_TYPE_JSON = "application/json";
-	private final static String CONTENT_TYPE_CSV = "text/csv";
-	private final static String CONTENT_TYPE_TSV = "text/tsv";
+	public final static String CONTENT_TYPE_XML = "application/xml";
+	public final static String CONTENT_TYPE_JSON = "application/json";
+	public final static String CONTENT_TYPE_CSV = "text/csv";
+	public final static String CONTENT_TYPE_TSV = "text/tab-seperated-values";
 	
 	private final static String[] CONTENT_TYPES = new String[]{
 			CONTENT_TYPE_XML, CONTENT_TYPE_JSON, CONTENT_TYPE_CSV, CONTENT_TYPE_TSV};
