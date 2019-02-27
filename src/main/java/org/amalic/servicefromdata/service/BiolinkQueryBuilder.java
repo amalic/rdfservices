@@ -27,14 +27,18 @@ public class BiolinkQueryBuilder {
 					+ "?version dct:isVersionOf ?ds ; dcat:distribution [ a void:Dataset ; dcat:accessURL ?graph ] .\n" 
 					+ "FILTER(?dataset = \"%s\")\n";
 	
+	private static String getGraphFromDatasetPart(String dataset) {
+		return String.format(GRAPH_FROM_DATASET_PART, dataset);
+	}
+	
 	public static String classes(String dataset) {
-		return String.format(PREFIXES 
+		return PREFIXES 
 				+ "SELECT ?dataset ?class ?count\n" 
 				+ "WHERE {\n" 
 				+ "  {\n" 
 				+ "    SELECT ?dataset ?classUri (count(?classUri) as ?count)  \n" 
 				+ "    WHERE {\n"
-				+ GRAPH_FROM_DATASET_PART
+				+ getGraphFromDatasetPart(dataset)
 				+ "      graph ?graph {\n" 
 				+ "        [] a ?classUri ;\n" 
 				+ "        bl:id ?id .\n" 
@@ -45,27 +49,24 @@ public class BiolinkQueryBuilder {
 				+ "  }\n" 
 				+ "  BIND(strafter(str(?classUri),\"http://w3id.org/biolink/vocab/\") as ?class)\n" 
 				+ "  FILTER(strlen(?class) > 0)\n" 
-				+ "}"
-    			, dataset);
+				+ "}";
 	}
 	
 	public static String datasetClass(String dataset, String className, Long page) {
 		String query = String.format(PREFIXES 
 				+ "SELECT ?dataset ?class ?id\n" 
 				+ "WHERE {\n" 
-				+ GRAPH_FROM_DATASET_PART 
+				+ getGraphFromDatasetPart(dataset) 
 				+ "  GRAPH ?graph {\n" 
 				+ "    ?entityUri a ?class .\n" 
 				+ "    ?entityUri a bl:%s .\n" 
 				+ "    ?entityUri bl:id ?id\n" 
 				+ "}}" 
-				, dataset, className);
+				, className);
 		
-		if(page==null || page < 1L)
-    		page = 1L;
-    	
-    	query += (page > 1 ? " OFFSET " + ((page - 1L) * LIMIT) : "")
+    	query += (page!=null && page > 1L ? " OFFSET " + ((page - 1L) * LIMIT) : "")
     			+ " LIMIT " + LIMIT;
+    	
 		return query;
 	}
 	
@@ -73,7 +74,7 @@ public class BiolinkQueryBuilder {
 		return String.format(PREFIXES 
 				+ "SELECT ?dataset ?class ?id ?property ?value\n" 
 				+ "WHERE {\n" 
-				+ GRAPH_FROM_DATASET_PART
+				+ getGraphFromDatasetPart(dataset)
 				+ "  GRAPH ?graph {\n" 
 				+ "    ?entityUri a bl:%s .\n" 
 				+ "    ?entityUri a ?classUri .\n" 
@@ -83,7 +84,7 @@ public class BiolinkQueryBuilder {
 				+ "  }\n" 
 				+ "  BIND(strafter(str(?classUri),\"http://w3id.org/biolink/vocab/\") as ?class)\n" 
 				+ "}"
-				, dataset, className, id);
+				, className, id);
 	}
 
 }
