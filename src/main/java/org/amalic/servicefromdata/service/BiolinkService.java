@@ -52,8 +52,9 @@ public class BiolinkService {
     		, @PathVariable String dataset
     		, @PathVariable("class") String className
     		, @RequestParam(required=false) Long page
-    		) throws IOException {
-    	repository.handleApiCall(BiolinkQueryBuilder.datasetClass(dataset, className, page), request, response);
+    		, @RequestParam(required=false) Long limit
+     		) throws IOException {
+    	repository.handleApiCall(BiolinkQueryBuilder.datasetClass(dataset, className, page, limit), request, response);
     }
     
     @RequestMapping(value = "/query/{dataset}/{class}/{id}"
@@ -66,6 +67,33 @@ public class BiolinkService {
     		, @PathVariable String id
     		) throws IOException {
     	repository.handleApiCall(BiolinkQueryBuilder.datasetClassId(dataset, className, id), request, response);
+    }
+    
+    @RequestMapping(value = "/vinciService"
+    		, method = RequestMethod.GET
+    		, produces = {ResultAs.CONTENT_TYPE_XML, ResultAs.CONTENT_TYPE_JSON, ResultAs.CONTENT_TYPE_CSV, ResultAs.CONTENT_TYPE_TSV}
+    		)
+    public void vinciService(HttpServletRequest request, HttpServletResponse response
+    		, @RequestParam String gene) throws IOException {
+    	repository.handleApiCall(String.format("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" + 
+    			"PREFIX bl: <http://w3id.org/biolink/vocab/>\n" + 
+    			"SELECT distinct ?gene ?produceProteinUri ?affectedByDrug ?byRelation ?inInteraction ?inGraph\n" + 
+    			"{\n" + 
+    			"  ?geneUri a bl:Gene ;\n" + 
+    			"    bl:id ?geneId ; \n" + 
+    			"    bl:name ?gene ;\n" + 
+    			"    bl:has_gene_product ?produceProteinUri .\n" + 
+    			"  OPTIONAL { ?geneProductUri bl:name ?produceProtein . }\n" + 
+    			"  ?geneProductUri a bl:GeneProduct .\n" + 
+    			"  GRAPH ?inGraph {\n" + 
+    			"      ?inInteraction ?associationSubject ?geneProductUri ;\n" + 
+    			"       ?associationObject ?drugUri ;\n" + 
+    			"       bl:relation ?byRelation .\n" + 
+    			"   }\n" + 
+    			"  ?drugUri a bl:ChemicalSubstance .\n" + 
+    			"  OPTIONAL {?drugUri bl:name ?affectedByDrug .}\n" + 
+    			"  FILTER regex(str(?gene), \"%s\") . \n" + 
+    			"} limit 100", gene), request, response);
     }
 
 }

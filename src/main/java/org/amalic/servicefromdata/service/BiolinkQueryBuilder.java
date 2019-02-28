@@ -52,7 +52,7 @@ public class BiolinkQueryBuilder {
 				+ "}";
 	}
 	
-	public static String datasetClass(String dataset, String className, Long page) {
+	public static String datasetClass(String dataset, String className, Long page, Long limit) {
 		String query = String.format(PREFIXES 
 				+ "SELECT ?dataset ?class ?id\n" 
 				+ "WHERE {\n" 
@@ -64,8 +64,11 @@ public class BiolinkQueryBuilder {
 				+ "}}" 
 				, className);
 		
-    	query += (page!=null && page > 1L ? " OFFSET " + ((page - 1L) * LIMIT) : "")
-    			+ " LIMIT " + LIMIT;
+		if (limit == null || limit > LIMIT || limit<1L)
+			limit = LIMIT;
+		
+    	query += (page!=null && page > 1L ? " OFFSET " + ((page - 1L) * limit) : "")
+    			+ " LIMIT " + limit;
     	
 		return query;
 	}
