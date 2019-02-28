@@ -47,7 +47,7 @@ public class BiolinkService {
     @RequestMapping(value = "/query/{dataset}/{class}"
     	, method = RequestMethod.GET
     	, produces = {ResultAs.CONTENT_TYPE_XML, ResultAs.CONTENT_TYPE_JSON, ResultAs.CONTENT_TYPE_CSV, ResultAs.CONTENT_TYPE_TSV})
-    @ApiOperation(value="Returns all instances of a class. Default limit is 1000 instances per page. Use page parameter to load more.")
+    @ApiOperation(value="Returns all instances of a class. Default and maximum limit is 1000 instances per page. Use page parameter to load more.")
     public void datasetClass(HttpServletRequest request, HttpServletResponse response
     		, @PathVariable String dataset
     		, @PathVariable("class") String className
@@ -69,31 +69,4 @@ public class BiolinkService {
     	repository.handleApiCall(BiolinkQueryBuilder.datasetClassId(dataset, className, id), request, response);
     }
     
-    @RequestMapping(value = "/vinciService"
-    		, method = RequestMethod.GET
-    		, produces = {ResultAs.CONTENT_TYPE_XML, ResultAs.CONTENT_TYPE_JSON, ResultAs.CONTENT_TYPE_CSV, ResultAs.CONTENT_TYPE_TSV}
-    		)
-    public void vinciService(HttpServletRequest request, HttpServletResponse response
-    		, @RequestParam String gene) throws IOException {
-    	repository.handleApiCall(String.format("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" + 
-    			"PREFIX bl: <http://w3id.org/biolink/vocab/>\n" + 
-    			"SELECT distinct ?gene ?produceProteinUri ?affectedByDrug ?byRelation ?inInteraction ?inGraph\n" + 
-    			"{\n" + 
-    			"  ?geneUri a bl:Gene ;\n" + 
-    			"    bl:id ?geneId ; \n" + 
-    			"    bl:name ?gene ;\n" + 
-    			"    bl:has_gene_product ?produceProteinUri .\n" + 
-    			"  OPTIONAL { ?geneProductUri bl:name ?produceProtein . }\n" + 
-    			"  ?geneProductUri a bl:GeneProduct .\n" + 
-    			"  GRAPH ?inGraph {\n" + 
-    			"      ?inInteraction ?associationSubject ?geneProductUri ;\n" + 
-    			"       ?associationObject ?drugUri ;\n" + 
-    			"       bl:relation ?byRelation .\n" + 
-    			"   }\n" + 
-    			"  ?drugUri a bl:ChemicalSubstance .\n" + 
-    			"  OPTIONAL {?drugUri bl:name ?affectedByDrug .}\n" + 
-    			"  FILTER regex(str(?gene), \"%s\") . \n" + 
-    			"} limit 100", gene), request, response);
-    }
-
 }
