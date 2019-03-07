@@ -3,7 +3,8 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'docker build --rm -f "Dockerfile" -t servicefromdata:latest .'
+        sh '''git pull
+docker build --rm -f "Dockerfile" -t servicefromdata:latest .'''
       }
     }
     stage('Run') {
