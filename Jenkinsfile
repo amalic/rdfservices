@@ -8,7 +8,7 @@ pipeline {
     }
     stage('Run') {
       steps {
-        sh 'docker run -it --rm -p 80:8080 servicefromdata'
+        sh 'docker run -d --rm -p 85:8080 --link graphdb:graphdb -e ENDPOINT "http://graphdb:7200/repositories/ncats-red-kg" servicefromdata'
       }
     }
   }
