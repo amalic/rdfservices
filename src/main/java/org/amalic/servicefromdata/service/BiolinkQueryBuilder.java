@@ -1,8 +1,6 @@
 package org.amalic.servicefromdata.service;
 
-public class BiolinkQueryBuilder {
-	
-	public static final Long LIMIT = 1000L;
+public class BiolinkQueryBuilder extends AbstractQueryBuilder {
 	
 	public static final String PREFIXES = 
     		"PREFIX bl: <http://w3id.org/biolink/vocab/>\n"
@@ -53,7 +51,7 @@ public class BiolinkQueryBuilder {
 	}
 	
 	public static String datasetClass(String dataset, String className, Long page, Long limit) {
-		String query = String.format(PREFIXES 
+		return String.format(PREFIXES 
 				+ "SELECT ?dataset ?class ?id\n" 
 				+ "WHERE {\n" 
 				+ getGraphFromDatasetPart(dataset) 
@@ -62,15 +60,7 @@ public class BiolinkQueryBuilder {
 				+ "    ?entityUri a bl:%s .\n" 
 				+ "    ?entityUri bl:id ?id\n" 
 				+ "}}" 
-				, className);
-		
-		if (limit == null || limit > LIMIT || limit<1L)
-			limit = LIMIT;
-		
-    	query += (page!=null && page > 1L ? " OFFSET " + ((page - 1L) * limit) : "")
-    			+ " LIMIT " + limit;
-    	
-		return query;
+				, className) + paginate(page, limit);
 	}
 	
 	public static String datasetClassId(String dataset, String className, String id) {
@@ -89,5 +79,5 @@ public class BiolinkQueryBuilder {
 				+ "}"
 				, className, id);
 	}
-
+	
 }
