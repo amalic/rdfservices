@@ -28,7 +28,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
 				.title("Services From Data")
 				.contact(new Contact(
 					"Alexander Malic"
-					, "https://github.com/amalic"
+					, "https://github.com/amalic/ServiceFromData"
 					, "alexander.malic@gmail.com"))
 				.license("Attribution 4.0 International (CC BY 4.0)")
 				.licenseUrl("https://creativecommons.org/licenses/by/4.0/")
