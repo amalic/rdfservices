@@ -1,0 +1,9 @@
+default:
+  endpoint: http://graphdb.dumontierlab.com/repositories/ncats-red-kg
+logging:
+  level:
+    org:
+      amalic: INFO
+      springframework: ERROR
+server:
+  port: 8080
