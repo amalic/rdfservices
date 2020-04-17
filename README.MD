@@ -6,15 +6,17 @@ First build and builds after modifying pom.xml might take some time, since the D
 ```
 docker build --rm -f "Dockerfile" -t servicefromdata:latest .
 ```
+## Checkout
+```
+git clone --recursive https://github.com/amalic/ServiceFromData.git
+```
 
 ## Run
 Use `-e ENDPOINT=<biolink-kg endpoint url>` environment switch to override default endpoint.
 ```
-docker run -it --rm -p 80:8080 servicefromdata
+docker compose up -d --build --force-recreate
 ```
 
 ### Try it out: 
-http://localhost/
-
-### Swagger-Apidoc:
-http://localhost/v2/api-docs
+- API at http://localhost/
+- GraphDb at http://localhost:7200/
