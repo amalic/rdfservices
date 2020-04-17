@@ -12,7 +12,6 @@ git clone --recursive https://github.com/amalic/ServiceFromData.git
 ```
 
 ## Run
-Use `-e ENDPOINT=<biolink-kg endpoint url>` environment switch to override default endpoint.
 ```
 docker compose up -d --build --force-recreate
 ```
