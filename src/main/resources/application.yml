@@ -1,9 +1,16 @@
 default:
-  endpoint: http://graphdb.dumontierlab.com/repositories/ncats-red-kg
+  endpoint: http://graphdb:7200/repositories/scigraph
+
+springdoc:
+  swagger-ui:
+    operations-sorter: alpha 
+    tags-sorter: alpha
+
 logging:
   level:
     org:
       amalic: INFO
       springframework: ERROR
+
 server:
   port: 8080

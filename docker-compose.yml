@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+
+  webservice:
+    build: .
+    depends_on: 
+      - graphdb
+    ports:
+      - 80:8080
+    networks:
+      - net
+# docker run 
+#  --name graphdb -d -p 7200:7200 
+#  -v /data/graphdb:/opt/graphdb/home 
+#  -v /home/alex/Documents/covidgraph/scigraph/:/root/graphdb-import/ 
+# --restart unless-stopped graphdb-free
+  graphdb:
+    image: graphdb-free
+    ports:
+      - 7200:7200
+    volumes:
+      - /data/graphdb:/opt/graphdb/home
+      - /home/alex/Documents/covidgraph/scigraph/:/root/graphdb-import/
+    networks:
+      - net
+
+networks:
+  net:
+    driver: bridge
+

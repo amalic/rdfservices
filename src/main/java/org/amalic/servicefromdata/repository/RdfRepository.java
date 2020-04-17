@@ -32,7 +32,7 @@ public class RdfRepository {
 	}
 
 	public void executeSparql(String query, final OutputStream outputStream, ResultAs resultAs) {
-		logger.fine(query.trim().replaceAll("\\s+", " "));
+		System.err.println(query.trim().replaceAll("\\s+", " "));
 		Repository repo = getRepo();
 		try {
 			Repositories.tupleQueryNoTransaction(repo, query, resultAs.getWriter(outputStream));

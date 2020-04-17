@@ -10,6 +10,23 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.info.License;
+
+
+@OpenAPIDefinition(
+	info = @Info(
+		version = "2020.04"
+		, license = @License(name = "MIT License", url = "https://github.com/amalic/ServiceFromData/blob/master/LICENSE")
+		, contact = @Contact(name = "Alexander Malic", email = "alexander.malic@gmail.com")
+		, description = "To-Do"
+	)
+)
+
+
 @SpringBootApplication
 @RestController
 public class Application {
@@ -20,6 +37,7 @@ public class Application {
     }
     
     @RequestMapping("/")
+    @Operation(hidden = true)
     public void getDefault(HttpServletResponse response) {
     	try {
     		response.sendRedirect("/swagger-ui.html");
