@@ -10,11 +10,7 @@ services:
       - 80:8080
     networks:
       - net
-# docker run 
-#  --name graphdb -d -p 7200:7200 
-#  -v /data/graphdb:/opt/graphdb/home 
-#  -v /home/alex/Documents/covidgraph/scigraph/:/root/graphdb-import/ 
-# --restart unless-stopped graphdb-free
+      
   graphdb:
     image: graphdb-free
     ports:
