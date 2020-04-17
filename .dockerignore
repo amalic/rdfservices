@@ -1,7 +1,9 @@
 Dockerfile
+docker-compose.yml
+graphdb-free/
 README.MD
 .settings
-target
+target/
 .classpath
 .project
 .vscode
