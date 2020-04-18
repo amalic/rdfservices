@@ -33,6 +33,7 @@ docker-compose \
   -f docker-compose-local.yml \
   up -d --build --force-recreate
 ```
+*First build can take some while. Maven dependencies will only be redownloaded when* `pom.xml` *changes.*
 
 ### Try it out: 
 - API at http://localhost/
