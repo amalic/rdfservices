@@ -10,6 +10,7 @@ git clone --recursive https://github.com/amalic/rdfservices.git
 ```
 docker compose up -d --build --force-recreate
 ```
+*The default configuration expects a repository called **scigraph** to exist and be available without login.*
 
 ### Try it out: 
 - API at http://localhost/
