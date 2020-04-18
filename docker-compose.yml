@@ -14,7 +14,11 @@ services:
       - net
       
   graphdb:
-    build: graphdb-free/
+    build:
+      context: graphdb-free/
+      args:
+        - edition=free
+        - version=9.1.1
     ports:
       - 7200:7200
     #volumes:
