@@ -10,6 +10,8 @@ import org.amalic.rdfservices.repository.RdfRepository;
 import org.amalic.rdfservices.repository.ResultAs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -74,13 +76,15 @@ public class GenericServiceV1 {
     }
     
     @GetMapping(value = "/getPropertiesOfInstance")
-    @Operation(summary = "Loads all properties of a specific instance."
-    , responses = { @ApiResponse(responseCode = "200", description = "Success"
-    , content = {
-    		@Content(mediaType = ResultAs.CONTENT_TYPE_CSV)
-			, @Content(mediaType = ResultAs.CONTENT_TYPE_TSV)
-    		, @Content(mediaType = ResultAs.CONTENT_TYPE_JSON)
-			, @Content(mediaType = ResultAs.CONTENT_TYPE_XML)
+    @Operation(
+    	summary = "Loads all properties of a specific instance."
+	    , responses = { 
+	    	@ApiResponse(
+	    		content = {
+		    		@Content(mediaType = ResultAs.CONTENT_TYPE_CSV)
+					, @Content(mediaType = ResultAs.CONTENT_TYPE_TSV)
+		    		, @Content(mediaType = ResultAs.CONTENT_TYPE_JSON)
+					, @Content(mediaType = ResultAs.CONTENT_TYPE_XML)
     })})
     public void getPropertiesOfInstance(HttpServletRequest request, HttpServletResponse response
     		, @RequestParam String graph
@@ -89,6 +93,26 @@ public class GenericServiceV1 {
     		) throws IOException {
     	repository.handleApiCall(GenericQueryBuilder.getPropertiesOfInstance(graph, className, id), request, response);
     }
+    
+    @PostMapping(value = "/executeSparql")
+    @Operation(
+    	summary = "Executes a SPARQL statement"
+	    , responses = { 
+	    	@ApiResponse(
+	    		content = {
+					@Content(mediaType = ResultAs.CONTENT_TYPE_CSV)
+					, @Content(mediaType = ResultAs.CONTENT_TYPE_TSV)
+					, @Content(mediaType = ResultAs.CONTENT_TYPE_JSON)
+					, @Content(mediaType = ResultAs.CONTENT_TYPE_XML)
+	})})
+    public void executeSparql(HttpServletRequest request, HttpServletResponse response
+    		, @RequestBody String sparql
+    		, @RequestParam(required=false) Long page
+    		, @RequestParam(required=false) Long limit
+    		) throws IOException {
+    	repository.handleApiCall(GenericQueryBuilder.executeSparql(sparql, page, limit), request, response);
+    }
+    
     
     
 }

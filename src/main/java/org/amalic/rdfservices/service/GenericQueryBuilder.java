@@ -25,15 +25,16 @@ public class GenericQueryBuilder extends AbstractQueryBuilder {
 	}
 	
 	public static String listInstances(String graph, String className, Long page, Long limit) {
-		return String.format(
-				"select (?s as ?Instance) where { \n" + 
-				"    graph <%s> {\n" + 
-				"		?s a <%s> .\n" + 
-				"	}\n" + 
-				"}" 
-				, graph
-				, className) 
-			+ paginate(page, limit);
+		return paginate(
+				String.format(
+					"select (?s as ?Instance) where { \n" + 
+					"    graph <%s> {\n" + 
+					"		?s a <%s> .\n" + 
+					"	}\n" + 
+					"}" 
+					, graph
+					, className) 
+				, page, limit);
 	}
 	
 	public static String getPropertiesOfInstance(String graph, String className, String id) {
@@ -46,6 +47,10 @@ public class GenericQueryBuilder extends AbstractQueryBuilder {
 				"}\n" + 
 				"order by ?p"
 				, graph, id, className);
+	}
+
+	public static String executeSparql(String sparql, Long page, Long limit) {
+		return paginate(sparql, page, limit);
 	}
 	
 }
