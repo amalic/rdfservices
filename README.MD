@@ -20,7 +20,7 @@ services:
 ```
 **Start via docker-compose**
 ```
-docker compose \
+docker-compose \
   -f docker-compose.yml \
   -f docker-compose-volumes.yml \
   up -d --build --force-recreate
