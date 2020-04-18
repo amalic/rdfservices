@@ -12,9 +12,7 @@ For volume mounts create a file called `docker-compose-volumes.yml`.
 **Example**
 ```
 version: "3"
-
 services:
-
   graphdb:
     volumes:
       - ./data/graphdb:/opt/graphdb/home
