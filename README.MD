@@ -1,6 +1,5 @@
 ## About
-This project aims to generate useful webservices for the the BioLink Api.
-For now it serves only Swagger V2 services, since it depends on Springfox.
+This project aims to be a template for generating OpenAPI webservices through [SpringDoc](https://github.com/springdoc/springdoc-openapi) for RDF-Endoints. It runs out of the box with OnotText GraphDB and serves only generic webservices useful for exploring RDF Endpoints. It can be easily extended with custom webservices and secured through [Spring Security](https://spring.io/guides/gs/securing-web/).
 ## Checkout
 ```
 git clone --recursive https://github.com/amalic/rdfservices.git
