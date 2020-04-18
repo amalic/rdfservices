@@ -32,8 +32,8 @@ public class RdfRepository {
 	}
 
 	public void executeSparql(String query, final OutputStream outputStream, ResultAs resultAs) {
-		System.err.println(query.trim().replaceAll("\\s+", " "));
 		Repository repo = getRepo();
+		logger.fine("Executing SPARQL: " + query);
 		try {
 			Repositories.tupleQueryNoTransaction(repo, query, resultAs.getWriter(outputStream));
 		} finally {

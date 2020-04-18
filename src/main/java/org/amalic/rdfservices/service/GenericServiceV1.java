@@ -53,8 +53,8 @@ public class GenericServiceV1 {
 					, @Content(mediaType = ResultAs.CONTENT_TYPE_JSON)
 					, @Content(mediaType = ResultAs.CONTENT_TYPE_XML)
 	})})
-    public void clagetClassessses(HttpServletRequest request, HttpServletResponse response
-    		, @RequestParam String graph
+    public void getClasses(HttpServletRequest request, HttpServletResponse response
+    		, @RequestParam(required = false) String graph
     		) throws IOException {
     	repository.handleApiCall(GenericQueryBuilder.getClasses(graph), request, response);
     }
@@ -70,7 +70,7 @@ public class GenericServiceV1 {
 					, @Content(mediaType = ResultAs.CONTENT_TYPE_XML)
 	})})
     public void listInstances(HttpServletRequest request, HttpServletResponse response
-    		, @RequestParam String graph
+    		, @RequestParam(required = false) String graph
     		, @RequestParam String className
     		, @RequestParam(required=false) Long page
     		, @RequestParam(required=false) Long limit
@@ -90,7 +90,7 @@ public class GenericServiceV1 {
 					, @Content(mediaType = ResultAs.CONTENT_TYPE_XML)
     })})
     public void getPropertiesOfInstance(HttpServletRequest request, HttpServletResponse response
-    		, @RequestParam String graph
+    		, @RequestParam(required = false) String graph
     		, @RequestParam String className
     		, @RequestParam String id
     		) throws IOException {
