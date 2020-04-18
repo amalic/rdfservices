@@ -97,7 +97,7 @@ public class GenericRdfServiceV1 {
     	repository.handleApiCall(GenericRdfServiceQueryBuilder.getPropertiesOfInstance(graph, className, id), request, response);
     }
     
-    @PostMapping(value = "/executeSparql")
+    @PostMapping(value = "/executeSparql", consumes =  "application/sparql-query")
     @Operation(
     	summary = "Executes a SPARQL statement"
 	    , responses = { 
