@@ -8,7 +8,7 @@ docker build --rm -f "Dockerfile" -t rdfservices:latest .
 ```
 ## Checkout
 ```
-git clone --recursive https://github.com/amalic/ServiceFromData.git
+git clone --recursive https://github.com/amalic/rdfservices.git
 ```
 
 ## Run
