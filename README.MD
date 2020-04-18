@@ -5,7 +5,7 @@ For now it serves only Swagger V2 services, since it depends on Springfox.
 ```
 git clone --recursive https://github.com/amalic/rdfservices.git
 ```
-*Please note that GraphDb Free binaries have to be downloaded from the [OntoText website](https://www.ontotext.com/products/graphdb/graphdb-free/) seperately*
+*Please note that GraphDb Free binaries have to be downloaded from the [OntoText website](https://www.ontotext.com/products/graphdb/graphdb-free/) seperately. This example was tested with GraphDB 9.1.1 free edition.*
 ## Run
 For volume mounts create a file called `docker-compose-volumes.yml`.
 
