@@ -1,5 +1,5 @@
 Dockerfile
-docker-compose.yml
+docker-compose*.yml
 graphdb-free/
 README.MD
 .settings
@@ -8,6 +8,6 @@ target/
 .project
 .vscode
 .gitignore
-update_from_git.sh
-Jenkinsfile
+.gitmodules
+.git/
 data/
