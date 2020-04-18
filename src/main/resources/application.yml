@@ -1,5 +1,5 @@
 default:
-  endpoint: http://graphdb:7200/repositories/scigraph
+  endpoint: http://localhost:7200/repositories/<repository_id>
 
 springdoc:
   swagger-ui:
