@@ -30,7 +30,7 @@ public class GenericRdfServiceV1 {
 	private RdfRepository repository;
     
     @GetMapping(value = "/getGraphs")
-    @Operation(summary = "This api call returns all graphs and statement count."
+    @Operation(summary = "Returns all graphs and statement count."
 		, responses = { 
 			@ApiResponse(
     			content = {
@@ -80,7 +80,7 @@ public class GenericRdfServiceV1 {
     
     @GetMapping(value = "/getPropertiesOfInstance")
     @Operation(
-    	summary = "Loads all properties and values of a specific instance."
+    	summary = "Returns all properties and values of a specific instance."
 	    , responses = { 
 	    	@ApiResponse(
 	    		content = {
@@ -99,7 +99,10 @@ public class GenericRdfServiceV1 {
     
     @PostMapping(value = "/executeSparql", consumes =  "application/sparql-query")
     @Operation(
-    	summary = "Executes a SPARQL statement"
+    	summary = "Executes a SPARQL query."
+    	, description = "<p><pre style=\"display:inline; margin:0;\">OFFSET</pre> and"
+    			+ " <pre style=\"display:inline; margin:0;\">LIMIT</pre> at the end"
+    			+ " of the Sparql query will be ignored.</p>"
 	    , responses = { 
 	    	@ApiResponse(
 	    		content = {
