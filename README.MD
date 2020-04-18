@@ -21,9 +21,10 @@ services:
         - edition=free
         - version=9.1.1
     volumes:
-      - ./data/graphdb:/opt/graphdb/home
-      - ./data/scigraph/:/root/graphdb-import/
+      - ./data/graphdb/:/opt/graphdb/home/
+      - ./data/imports/:/root/graphdb-import/
 ```
+*This example expects a repository called **scigraph** to exist and be available without login. It will create a `./data` subdirectory for graph-db database data and a direcory for for server-side data imports.*
 **Start via docker-compose**
 ```
 docker-compose \
@@ -31,7 +32,6 @@ docker-compose \
   -f docker-compose-local.yml \
   up -d --build --force-recreate
 ```
-*The default configuration expects a repository called **scigraph** to exist and be available without login.*
 
 ### Try it out: 
 - API at http://localhost/
