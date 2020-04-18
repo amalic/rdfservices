@@ -6,7 +6,7 @@ git clone --recursive https://github.com/amalic/rdfservices.git
 ```
 *Please note that GraphDb Free binaries have to be downloaded from the [OntoText website](https://www.ontotext.com/products/graphdb/graphdb-free/) seperately. This example was tested with GraphDB 9.1.1 free edition.*
 ## Run
-For volume mounts create a file called `docker-compose-local.yml`.
+For volume mounts and other settings you can create a file called `docker-compose-local.yml`.
 
 **Example**
 ```
