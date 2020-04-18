@@ -1,7 +1,7 @@
-<p align="center"><img height="100" src="https://s3-us-west-2.amazonaws.com/assertible/integrations/OpenAPI-Logo-Pantone.png"></p>
-
 ## About
 This project aims to be a template for generating OpenAPI webservices through [SpringDoc](https://github.com/springdoc/springdoc-openapi) for RDF-Endoints. It runs out of the box with Ontotext GraphDB and serves only generic webservices useful for exploring RDF Endpoints. It can be easily extended with custom webservices and secured thanks to [Spring Security](https://spring.io/guides/gs/securing-web/).
+
+<p align="center"><img height="100" src="https://s3-us-west-2.amazonaws.com/assertible/integrations/OpenAPI-Logo-Pantone.png"></p>
 
 ## Checkout
 ```
