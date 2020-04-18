@@ -30,7 +30,7 @@ public class GenericRdfServiceV1 {
 	private RdfRepository repository;
     
     @GetMapping(value = "/getGraphs")
-    @Operation(summary = "This api call returns all graphs."
+    @Operation(summary = "This api call returns all graphs and statement count."
 		, responses = { 
 			@ApiResponse(
     			content = {
@@ -44,7 +44,7 @@ public class GenericRdfServiceV1 {
     }
     
     @GetMapping(value = "/getClasses")
-    @Operation(summary = "This all classes for this particular data-set with instances having an id."
+    @Operation(summary = "Returns a list of classes and instance count."
 		, responses = { 
 			@ApiResponse(
 				content = {
@@ -60,7 +60,7 @@ public class GenericRdfServiceV1 {
     }
     
     @GetMapping(value = "/listInstances")
-    @Operation(summary = "Returns all instances of a class. Default and maximum limit is 1000 instances per page. Use page parameter to load more."
+    @Operation(summary = "Returns all instances."
 		, responses = { 
 			@ApiResponse(
 				content = {
@@ -80,7 +80,7 @@ public class GenericRdfServiceV1 {
     
     @GetMapping(value = "/getPropertiesOfInstance")
     @Operation(
-    	summary = "Loads all properties of a specific instance."
+    	summary = "Loads all properties and values of a specific instance."
 	    , responses = { 
 	    	@ApiResponse(
 	    		content = {
