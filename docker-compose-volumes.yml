@@ -1,0 +1,8 @@
+version: "3"
+
+services:
+
+  graphdb:
+    volumes:
+      - ./data/graphdb:/opt/graphdb/home
+      - ./data/covidgraph/scigraph/:/root/graphdb-import/

@@ -8,7 +8,10 @@ git clone --recursive https://github.com/amalic/rdfservices.git
 *Please note that GraphDb Free binaries have to be downloaded from the [OntoText website](https://www.ontotext.com/products/graphdb/graphdb-free/) seperately*
 ## Run with docker-compose
 ```
-docker compose up -d --build --force-recreate
+docker compose \
+  -f docker-compose.yml \
+  -f docker-compose-volumes.yml \
+  up -d --build --force-recreate
 ```
 *The default configuration expects a repository called **scigraph** to exist and be available without login.*
 

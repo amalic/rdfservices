@@ -9,9 +9,8 @@ springdoc:
 
 logging:
   level:
-    org:
-      amalic: INFO
-      springframework: ERROR
+    root: ERROR
+    org.amalic: DEBUG
 
 server:
   port: 8080
