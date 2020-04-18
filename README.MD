@@ -5,6 +5,7 @@ For now it serves only Swagger V2 services, since it depends on Springfox.
 ```
 git clone --recursive https://github.com/amalic/rdfservices.git
 ```
+**Please note that GraphDb has to be downloaded seperately**
 ## Run with docker-compose
 ```
 docker compose up -d --build --force-recreate
