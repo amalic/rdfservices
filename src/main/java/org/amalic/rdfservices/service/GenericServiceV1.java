@@ -40,7 +40,7 @@ public class GenericServiceV1 {
 					, @Content(mediaType = ResultAs.CONTENT_TYPE_XML)
 	})})
     public void getGraphs(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    	repository.handleApiCall(GenericQueryBuilder.graphs(), request, response);
+    	repository.handleApiCall(GenericServiceQueryBuilder.graphs(), request, response);
     }
     
     @GetMapping(value = "/getClasses")
@@ -56,7 +56,7 @@ public class GenericServiceV1 {
     public void getClasses(HttpServletRequest request, HttpServletResponse response
     		, @RequestParam(required = false) String graph
     		) throws IOException {
-    	repository.handleApiCall(GenericQueryBuilder.getClasses(graph), request, response);
+    	repository.handleApiCall(GenericServiceQueryBuilder.getClasses(graph), request, response);
     }
     
     @GetMapping(value = "/listInstances")
@@ -75,7 +75,7 @@ public class GenericServiceV1 {
     		, @RequestParam(required=false) Long page
     		, @RequestParam(required=false) Long limit
     		) throws IOException {
-    	repository.handleApiCall(GenericQueryBuilder.listInstances(graph, className, page, limit), request, response);
+    	repository.handleApiCall(GenericServiceQueryBuilder.listInstances(graph, className, page, limit), request, response);
     }
     
     @GetMapping(value = "/getPropertiesOfInstance")
@@ -94,7 +94,7 @@ public class GenericServiceV1 {
     		, @RequestParam String className
     		, @RequestParam String id
     		) throws IOException {
-    	repository.handleApiCall(GenericQueryBuilder.getPropertiesOfInstance(graph, className, id), request, response);
+    	repository.handleApiCall(GenericServiceQueryBuilder.getPropertiesOfInstance(graph, className, id), request, response);
     }
     
     @PostMapping(value = "/executeSparql")
@@ -113,7 +113,7 @@ public class GenericServiceV1 {
     		, @RequestParam(required=false) Long page
     		, @RequestParam(required=false) Long limit
     		) throws IOException {
-    	repository.handleApiCall(GenericQueryBuilder.executeSparql(sparql, page, limit), request, response);
+    	repository.handleApiCall(GenericServiceQueryBuilder.executeSparql(sparql, page, limit), request, response);
     }
     
     

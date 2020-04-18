@@ -1,6 +1,6 @@
 package org.amalic.rdfservices.service;
 
-public class GenericQueryBuilder extends AbstractQueryBuilder {
+public class GenericServiceQueryBuilder extends AbstractQueryBuilder {
 
 	public static String graphs() {
 		return "select (?g as ?Graph) (count(?p) as ?Statements) where" + 
