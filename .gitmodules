@@ -1,0 +1,3 @@
+[submodule "graphdb-free"]
+	path = graphdb-free
+	url = https://github.com/amalic/graphdb-free
