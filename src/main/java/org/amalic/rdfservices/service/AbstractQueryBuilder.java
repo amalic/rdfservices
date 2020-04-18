@@ -1,8 +1,11 @@
 package org.amalic.rdfservices.service;
 
+import java.util.regex.Pattern;
+
 public class AbstractQueryBuilder {
 	public static final Long MAX_LIMIT = 100000L;
 	public static final Long DEFAULT_LIMIT = 100L;
+	private static final Pattern limitAndOffsetPattern = Pattern.compile("(?i)(\\s+(LIMIT|OFFSET)\\s+\\d+\\s*)+$");
 	
 	public static String checkGraph(String innerSparql, String graph) {
 		if(graph!=null && graph.length()>0)
@@ -12,7 +15,7 @@ public class AbstractQueryBuilder {
 	}
 	
 	static String paginate(String sparql, Long page, Long limit) {
-		return sparql.replaceAll("(?i)(\\s+(limit|offset)\\s+\\d+\\s*)+$", "") + paginate(page, limit);
+		return limitAndOffsetPattern.matcher(sparql).replaceAll("") + paginate(page, limit);
 	}
 
 	protected static String paginate(Long page, Long limit) {
