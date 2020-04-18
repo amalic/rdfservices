@@ -15,7 +15,7 @@ public class AbstractQueryBuilder {
 	}
 	
 	static String paginate(String sparql, Long page, Long limit) {
-		return limitAndOffsetPattern.matcher(sparql).replaceAll("") + paginate(page, limit);
+		return limitAndOffsetPattern.matcher(sparql).replaceFirst("") + paginate(page, limit);
 	}
 
 	protected static String paginate(Long page, Long limit) {
