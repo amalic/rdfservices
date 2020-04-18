@@ -12,7 +12,7 @@ public class AbstractQueryBuilder {
 	}
 	
 	static String paginate(String sparql, Long page, Long limit) {
-		return sparql.replaceAll("(\\s+(LIMIT|OFFSET)\\s+\\d+\\s*)+$", "") + paginate(page, limit);
+		return sparql.replaceAll("(?i)(\\s+(limit|offset)\\s+\\d+\\s*)+$", "") + paginate(page, limit);
 	}
 
 	protected static String paginate(Long page, Long limit) {
