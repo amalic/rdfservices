@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.info.License;
 		version = "2020.04"
 		, title = "Some generic RDF services" 
 		, description = "Easy to extend webservices frontend for RDF endpoints"
-		, license = @License(name = "MIT License", url = "https://github.com/amalic/ServiceFromData/blob/master/LICENSE")
+		, license = @License(name = "MIT License", url = "https://github.com/amalic/rdfservices/blob/master/LICENSE")
 		, contact = @Contact(name = "Alexander Malic", email = "alexander.malic@gmail.com")
 	)
 )
