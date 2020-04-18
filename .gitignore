@@ -4,4 +4,4 @@ target
 .project
 .vscode
 update_from_git.sh
-data/
+/data/*
