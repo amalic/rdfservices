@@ -1,4 +1,4 @@
-package org.amalic.servicefromdata.repository;
+package org.amalic.rdfservices.repository;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -60,7 +60,7 @@ public class RdfRepository {
 			repo = new SPARQLRepository(endpoint);
 		}
 		if (!repo.isInitialized()) {
-			repo.initialize();
+			repo.init();
 			logger.info("Repository initialized");
 		}
 		return repo;

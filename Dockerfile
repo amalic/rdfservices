@@ -12,6 +12,6 @@ RUN mvn package spring-boot:repackage
 # stage-1 for execution
 FROM openjdk:8-jre
 WORKDIR /app
-COPY --from=0 /tmp/target/ServiceFromData-*.jar /app/ServiceFromData.jar
-ENTRYPOINT ["java","-jar","ServiceFromData.jar"]
+COPY --from=0 /tmp/target/rdfservices-*.jar /app/rdfservices.jar
+ENTRYPOINT ["java","-jar","rdfservices.jar"]
 EXPOSE 8080

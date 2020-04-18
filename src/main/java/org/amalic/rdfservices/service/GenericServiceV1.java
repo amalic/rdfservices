@@ -1,4 +1,4 @@
-package org.amalic.servicefromdata.service;
+package org.amalic.rdfservices.service;
 
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -6,11 +6,10 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.amalic.servicefromdata.repository.RdfRepository;
-import org.amalic.servicefromdata.repository.ResultAs;
+import org.amalic.rdfservices.repository.RdfRepository;
+import org.amalic.rdfservices.repository.ResultAs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,7 +40,7 @@ public class GenericServiceV1 {
     	repository.handleApiCall(GenericQueryBuilder.graphs(), request, response);
     }
     
-    @PostMapping(value = "/getClasses")
+    @GetMapping(value = "/getClasses")
     @Operation(summary = "This all classes for this particular data-set with instances having an id."
     		, responses = { @ApiResponse(responseCode = "200", description = "Success"
 			, content = {
@@ -50,13 +49,13 @@ public class GenericServiceV1 {
 				, @Content(mediaType = ResultAs.CONTENT_TYPE_JSON)
 				, @Content(mediaType = ResultAs.CONTENT_TYPE_XML)
 	})})
-    public void classes(HttpServletRequest request, HttpServletResponse response
+    public void clagetClassessses(HttpServletRequest request, HttpServletResponse response
     		, @RequestParam String graph
     		) throws IOException {
     	repository.handleApiCall(GenericQueryBuilder.getClasses(graph), request, response);
     }
     
-    @PostMapping(value = "/listInstances")
+    @GetMapping(value = "/listInstances")
     @Operation(summary = "Returns all instances of a class. Default and maximum limit is 1000 instances per page. Use page parameter to load more."
     		, responses = { @ApiResponse(responseCode = "200", description = "Success"
 			, content = {
@@ -74,7 +73,7 @@ public class GenericServiceV1 {
     	repository.handleApiCall(GenericQueryBuilder.listInstances(graph, className, page, limit), request, response);
     }
     
-    @PostMapping(value = "/getPropertiesOfInstance")
+    @GetMapping(value = "/getPropertiesOfInstance")
     @Operation(summary = "Loads all properties of a specific instance."
     , responses = { @ApiResponse(responseCode = "200", description = "Success"
     , content = {

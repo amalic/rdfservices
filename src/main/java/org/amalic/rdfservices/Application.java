@@ -1,4 +1,4 @@
-package org.amalic.servicefromdata;
+package org.amalic.rdfservices;
 
 import java.util.logging.Logger;
 
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
@@ -20,9 +19,10 @@ import io.swagger.v3.oas.annotations.info.License;
 @OpenAPIDefinition(
 	info = @Info(
 		version = "2020.04"
+		, title = "Some generic RDF services" 
+		, description = "Easy to extend webservices frontend for RDF endpoints"
 		, license = @License(name = "MIT License", url = "https://github.com/amalic/ServiceFromData/blob/master/LICENSE")
 		, contact = @Contact(name = "Alexander Malic", email = "alexander.malic@gmail.com")
-		, description = "To-Do"
 	)
 )
 
@@ -37,7 +37,6 @@ public class Application {
     }
     
     @RequestMapping("/")
-    @Operation(hidden = true)
     public void getDefault(HttpServletResponse response) {
     	try {
     		response.sendRedirect("/swagger-ui.html");

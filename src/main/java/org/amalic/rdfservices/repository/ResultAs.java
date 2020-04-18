@@ -1,4 +1,4 @@
-package org.amalic.servicefromdata.repository;
+package org.amalic.rdfservices.repository;
 
 import java.io.OutputStream;
 import java.util.Arrays;

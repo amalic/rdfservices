@@ -5,6 +5,7 @@ springdoc:
   swagger-ui:
     operations-sorter: alpha 
     tags-sorter: alpha
+  packages-to-scan: org.amalic.rdfservices.service
 
 logging:
   level:

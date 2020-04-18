@@ -1,4 +1,4 @@
-package org.amalic.servicefromdata.service;
+package org.amalic.rdfservices.service;
 
 public class GenericQueryBuilder extends AbstractQueryBuilder {
 
