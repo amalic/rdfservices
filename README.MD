@@ -13,4 +13,5 @@ docker compose up -d --build --force-recreate
 
 ### Try it out: 
 - API at http://localhost/
+- API Docs at http://localhost/v3/api-docs
 - GraphDb at http://localhost:7200/
