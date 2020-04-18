@@ -10,3 +10,4 @@ target/
 .gitignore
 update_from_git.sh
 Jenkinsfile
+data/
