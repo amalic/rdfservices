@@ -31,12 +31,13 @@ public class GenericServiceV1 {
     
     @GetMapping(value = "/getGraphs")
     @Operation(summary = "This api call returns all graphs."
-    		, responses = { @ApiResponse(responseCode = "200", description = "Success"
-			, content = {
-				@Content(mediaType = ResultAs.CONTENT_TYPE_CSV)
-				, @Content(mediaType = ResultAs.CONTENT_TYPE_TSV)
-				, @Content(mediaType = ResultAs.CONTENT_TYPE_JSON)
-				, @Content(mediaType = ResultAs.CONTENT_TYPE_XML)
+		, responses = { 
+			@ApiResponse(
+    			content = {
+					@Content(mediaType = ResultAs.CONTENT_TYPE_CSV)
+					, @Content(mediaType = ResultAs.CONTENT_TYPE_TSV)
+					, @Content(mediaType = ResultAs.CONTENT_TYPE_JSON)
+					, @Content(mediaType = ResultAs.CONTENT_TYPE_XML)
 	})})
     public void getGraphs(HttpServletRequest request, HttpServletResponse response) throws IOException {
     	repository.handleApiCall(GenericQueryBuilder.graphs(), request, response);
@@ -44,12 +45,13 @@ public class GenericServiceV1 {
     
     @GetMapping(value = "/getClasses")
     @Operation(summary = "This all classes for this particular data-set with instances having an id."
-    		, responses = { @ApiResponse(responseCode = "200", description = "Success"
-			, content = {
-				@Content(mediaType = ResultAs.CONTENT_TYPE_CSV)
-				, @Content(mediaType = ResultAs.CONTENT_TYPE_TSV)
-				, @Content(mediaType = ResultAs.CONTENT_TYPE_JSON)
-				, @Content(mediaType = ResultAs.CONTENT_TYPE_XML)
+		, responses = { 
+			@ApiResponse(
+				content = {
+					@Content(mediaType = ResultAs.CONTENT_TYPE_CSV)
+					, @Content(mediaType = ResultAs.CONTENT_TYPE_TSV)
+					, @Content(mediaType = ResultAs.CONTENT_TYPE_JSON)
+					, @Content(mediaType = ResultAs.CONTENT_TYPE_XML)
 	})})
     public void clagetClassessses(HttpServletRequest request, HttpServletResponse response
     		, @RequestParam String graph
@@ -59,12 +61,13 @@ public class GenericServiceV1 {
     
     @GetMapping(value = "/listInstances")
     @Operation(summary = "Returns all instances of a class. Default and maximum limit is 1000 instances per page. Use page parameter to load more."
-    		, responses = { @ApiResponse(responseCode = "200", description = "Success"
-			, content = {
-				@Content(mediaType = ResultAs.CONTENT_TYPE_CSV)
-				, @Content(mediaType = ResultAs.CONTENT_TYPE_TSV)
-				, @Content(mediaType = ResultAs.CONTENT_TYPE_JSON)
-				, @Content(mediaType = ResultAs.CONTENT_TYPE_XML)
+		, responses = { 
+			@ApiResponse(
+				content = {
+					@Content(mediaType = ResultAs.CONTENT_TYPE_CSV)
+					, @Content(mediaType = ResultAs.CONTENT_TYPE_TSV)
+					, @Content(mediaType = ResultAs.CONTENT_TYPE_JSON)
+					, @Content(mediaType = ResultAs.CONTENT_TYPE_XML)
 	})})
     public void listInstances(HttpServletRequest request, HttpServletResponse response
     		, @RequestParam String graph
