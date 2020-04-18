@@ -71,9 +71,9 @@ public class GenericRdfServiceV1 {
 	})})
     public void listInstances(HttpServletRequest request, HttpServletResponse response
     		, @RequestParam(required = false) String graph
-    		, @RequestParam String className
-    		, @RequestParam(required=false) Long page
-    		, @RequestParam(required=false) Long limit
+    		, @RequestParam(required = false) String className
+    		, @RequestParam(required = false) Long page
+    		, @RequestParam(required = false) Long limit
     		) throws IOException {
     	repository.handleApiCall(GenericRdfServiceQueryBuilder.listInstances(graph, className, page, limit), request, response);
     }
@@ -91,7 +91,7 @@ public class GenericRdfServiceV1 {
     })})
     public void getPropertiesOfInstance(HttpServletRequest request, HttpServletResponse response
     		, @RequestParam(required = false) String graph
-    		, @RequestParam String className
+    		, @RequestParam(required = false) String className
     		, @RequestParam String id
     		) throws IOException {
     	repository.handleApiCall(GenericRdfServiceQueryBuilder.getPropertiesOfInstance(graph, className, id), request, response);
@@ -110,8 +110,8 @@ public class GenericRdfServiceV1 {
 	})})
     public void executeSparql(HttpServletRequest request, HttpServletResponse response
     		, @RequestBody String sparql
-    		, @RequestParam(required=false) Long page
-    		, @RequestParam(required=false) Long limit
+    		, @RequestParam(required = false) Long page
+    		, @RequestParam(required = false) Long limit
     		) throws IOException {
     	repository.handleApiCall(GenericRdfServiceQueryBuilder.executeSparql(sparql, page, limit), request, response);
     }

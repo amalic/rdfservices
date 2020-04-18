@@ -56,7 +56,7 @@ public class RdfRepository {
 			String endpoint = System.getenv("ENDPOINT");
 			if (endpoint == null || endpoint.length() == 0)
 				endpoint = defaultEndpoint;
-			logger.fine("ENDPOINT: " + endpoint);
+			logger.config("ENDPOINT: " + endpoint);
 			repo = new SPARQLRepository(endpoint);
 		}
 		if (!repo.isInitialized()) {

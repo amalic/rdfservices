@@ -19,10 +19,12 @@ import io.swagger.v3.oas.annotations.info.License;
 @OpenAPIDefinition(
 	info = @Info(
 		version = "2020.04"
-		, title = "Some generic RDF services" 
-		, description = "Easy to extend webservices frontend for RDF endpoints"
-		, license = @License(name = "MIT License", url = "https://github.com/amalic/rdfservices/blob/master/LICENSE")
+		, title = "RDF OpenAPI services" 
+		, description = 
+				"<p>Easy to extend webservices frontend for RDF endpoints</p>" +
+				"<p>Max limit of entries per page is 100.000. Default limit is set to 100.</p>"
 		, contact = @Contact(name = "Alexander Malic", email = "alexander.malic@gmail.com")
+		, license = @License(name = "MIT License", url = "https://github.com/amalic/rdfservices/blob/master/LICENSE")
 	)
 )
 

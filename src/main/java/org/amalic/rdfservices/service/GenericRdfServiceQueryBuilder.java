@@ -16,14 +16,14 @@ public class GenericRdfServiceQueryBuilder extends AbstractQueryBuilder {
 	public static String listInstances(String graph, String className, Long page, Long limit) {
 		return paginate(
 				"select (?s as ?Instance) where {" + 
-				checkGraph(String.format("?s a <%s>.", className), graph) + 
+				checkGraph(className!=null?String.format("?s a <%s>.", className):"?s a []", graph) + 
 				"}"
 			, page, limit);
 	}
 	
 	public static String getPropertiesOfInstance(String graph, String className, String id) {
 		return "select (?p as ?Property) (?o as ?Value) where {" + 
-				checkGraph(String.format(" <%s> a <%s>; ?p ?o.", id, className), graph) + 
+				checkGraph(String.format((className!=null?"<%s> a <%s>; ?p ?o.":"<%s> ?p ?o."), id, className), graph) + 
 				"} order by ?p";
 	}
 	
