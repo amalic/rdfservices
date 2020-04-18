@@ -6,8 +6,6 @@ services:
     build: .
     depends_on: 
       - graphdb
-    environment:
-      - ENDPOINT=http://graphdb:7200/repositories/scigraph
     ports:
       - 80:8080
     networks:
