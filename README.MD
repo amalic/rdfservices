@@ -1,5 +1,5 @@
 ## About
-This project aims to be a template for generating OpenAPI webservices through [SpringDoc](https://github.com/springdoc/springdoc-openapi) for RDF-Endoints. It runs out of the box with OnotText GraphDB and serves only generic webservices useful for exploring RDF Endpoints. It can be easily extended with custom webservices and secured thanks to [Spring Security](https://spring.io/guides/gs/securing-web/).
+This project aims to be a template for generating OpenAPI webservices through [SpringDoc](https://github.com/springdoc/springdoc-openapi) for RDF-Endoints. It runs out of the box with OntoText GraphDB and serves only generic webservices useful for exploring RDF Endpoints. It can be easily extended with custom webservices and secured thanks to [Spring Security](https://spring.io/guides/gs/securing-web/).
 ## Checkout
 ```
 git clone --recursive https://github.com/amalic/rdfservices.git
@@ -12,6 +12,9 @@ For volume mounts create a file called `docker-compose-local.yml`.
 ```
 version: "3"
 services:
+  webservice:
+    environment:
+      - ENDPOINT=http://graphdb:7200/repositories/scigraph
   graphdb:
     build:
       args:
