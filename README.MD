@@ -7,13 +7,17 @@ git clone --recursive https://github.com/amalic/rdfservices.git
 ```
 *Please note that GraphDb Free binaries have to be downloaded from the [OntoText website](https://www.ontotext.com/products/graphdb/graphdb-free/) seperately. This example was tested with GraphDB 9.1.1 free edition.*
 ## Run
-For volume mounts create a file called `docker-compose-volumes.yml`.
+For volume mounts create a file called `docker-compose-local.yml`.
 
 **Example**
 ```
 version: "3"
 services:
   graphdb:
+    build:
+      args:
+        - edition=free
+        - version=9.1.1
     volumes:
       - ./data/graphdb:/opt/graphdb/home
       - ./data/scigraph/:/root/graphdb-import/
@@ -22,7 +26,7 @@ services:
 ```
 docker-compose \
   -f docker-compose.yml \
-  -f docker-compose-volumes.yml \
+  -f docker-compose-local.yml \
   up -d --build --force-recreate
 ```
 *The default configuration expects a repository called **scigraph** to exist and be available without login.*
