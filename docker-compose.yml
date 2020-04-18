@@ -21,9 +21,6 @@ services:
         - version=9.1.1
     ports:
       - 7200:7200
-    #volumes:
-    #  - ./data/graphdb:/opt/graphdb/home
-    #  - ./data/covidgraph/scigraph/:/root/graphdb-import/
     networks:
       - net
 
