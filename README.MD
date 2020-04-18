@@ -12,6 +12,9 @@ For volume mounts create a file called `docker-compose-local.yml`.
 ```
 version: "3"
 services:
+  webservice:
+    environment:
+      - ENDPOINT=http://graphdb:7200/repositories/scigraph
   graphdb:
     build:
       args:
