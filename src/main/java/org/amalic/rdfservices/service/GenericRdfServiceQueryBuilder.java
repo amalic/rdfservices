@@ -13,7 +13,7 @@ public class GenericRdfServiceQueryBuilder extends AbstractQueryBuilder {
 				"} group by ?c order by ?c";
 	}
 	
-	public static String listInstances(String graph, String className, Long page, Long limit) {
+	public static String getInstances(String graph, String className, Long page, Long limit) {
 		return paginate(
 				"select (?s as ?Instance) where {" + 
 				checkGraph(className!=null?String.format("?s a <%s>.", className):"?s a []", graph) + 

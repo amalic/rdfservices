@@ -59,7 +59,7 @@ public class GenericRdfServiceV1 {
     	repository.handleApiCall(GenericRdfServiceQueryBuilder.getClasses(graph), request, response);
     }
     
-    @GetMapping(value = "/listInstances")
+    @GetMapping(value = "/getInstances")
     @Operation(summary = "Returns all instances."
 		, responses = { 
 			@ApiResponse(
@@ -69,13 +69,13 @@ public class GenericRdfServiceV1 {
 					, @Content(mediaType = ResultAs.CONTENT_TYPE_JSON)
 					, @Content(mediaType = ResultAs.CONTENT_TYPE_XML)
 	})})
-    public void listInstances(HttpServletRequest request, HttpServletResponse response
+    public void getInstances(HttpServletRequest request, HttpServletResponse response
     		, @RequestParam(required = false) String graph
     		, @RequestParam(required = false) String className
     		, @RequestParam(required = false) Long page
     		, @RequestParam(required = false) Long limit
     		) throws IOException {
-    	repository.handleApiCall(GenericRdfServiceQueryBuilder.listInstances(graph, className, page, limit), request, response);
+    	repository.handleApiCall(GenericRdfServiceQueryBuilder.getInstances(graph, className, page, limit), request, response);
     }
     
     @GetMapping(value = "/getPropertiesOfInstance")
