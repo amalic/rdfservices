@@ -4,12 +4,12 @@ public class GenericRdfServiceQueryBuilder extends AbstractQueryBuilder {
 
 	public static String graphs() {
 		return "select (?g as ?Graph) (count(?p) as ?Statements) where" + 
-				"{graph ?g { [] ?p [] }} group by ?g order by ?g";
+				"{graph ?g {[] ?p []}} group by ?g order by ?g";
 	}
 	
 	public static String getClasses(String graph) {
 		return "select (?c as ?Class) (count(?c) as ?Instances) where {" + 
-				checkGraph("[] a ?c ", graph) + 
+				checkGraph("[] a ?c", graph) + 
 				"} group by ?c order by ?c";
 	}
 	
