@@ -11,6 +11,8 @@ git clone --recursive https://github.com/amalic/rdfservices.git
 ## Run
 For volume mounts and other settings you can create a file called `docker-compose-local.yml`.
 
+<p align="center"><img width="300" src="https://miro.medium.com/max/453/1*QVFjsW8gyIXeCUJucmK4XA.png"></p>
+
 **Example**
 ```
 version: "3"
@@ -39,6 +41,6 @@ docker-compose \
 *First build can take some while. Maven dependencies will only be redownloaded when* `pom.xml` *changes.*
 
 ### Try it out: 
-- API at http://localhost/
+- API at http://localhost/swagger-ui.html
 - OpenAPI Docs at http://localhost/v3/api-docs
 - GraphDb at http://localhost:7200/
