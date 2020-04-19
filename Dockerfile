@@ -10,7 +10,7 @@ COPY src/ ./src/
 RUN mvn package spring-boot:repackage
 
 # stage-1 for execution
-FROM openjdk:8-jre
+FROM openjdk:8-jre-slim
 WORKDIR /app
 COPY --from=0 /tmp/target/rdfservices-*.jar /app/rdfservices.jar
 ENTRYPOINT ["java","-jar","rdfservices.jar"]
