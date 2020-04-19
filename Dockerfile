@@ -4,7 +4,7 @@ WORKDIR /tmp
 ## cache dependencies seperatly
 ## only runs if pom.xml changes
 COPY pom.xml .
-RUN mvn verify clean --fail-never
+RUN mvn dependency:resolve-plugins dependency:resolve verify clean --fail-never
 ## build from source
 COPY src/ ./src/
 RUN mvn package spring-boot:repackage
