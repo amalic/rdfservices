@@ -11,6 +11,8 @@ git clone --recursive https://github.com/amalic/rdfservices.git
 ## Run
 For volume mounts and other settings you can create a file called `docker-compose-local.yml`.
 
+<p align="center"><img width="300" src="https://miro.medium.com/max/453/1*QVFjsW8gyIXeCUJucmK4XA.png"></p>
+
 **Example**
 ```
 version: "3"
