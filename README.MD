@@ -15,7 +15,7 @@ For volume mounts and other settings you can create a file called `docker-compos
 ```
 version: "3"
 services:
-  webservice:
+  rdfservices:
     environment:
       - ENDPOINT=http://graphdb:7200/repositories/scigraph
   graphdb:
