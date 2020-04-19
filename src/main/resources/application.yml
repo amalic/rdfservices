@@ -6,7 +6,8 @@ springdoc:
     display-request-duration: true
     operations-sorter: alpha 
     tags-sorter: alpha
-  packages-to-scan: org.amalic.rdfservices.service
+  packages-to-scan: 
+    - org.amalic.rdfservices.service
 
 logging:
   level:
