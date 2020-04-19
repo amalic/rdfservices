@@ -3,6 +3,7 @@ default:
 
 springdoc:
   swagger-ui:
+    display-request-duration: true
     operations-sorter: alpha 
     tags-sorter: alpha
   packages-to-scan: org.amalic.rdfservices.service
