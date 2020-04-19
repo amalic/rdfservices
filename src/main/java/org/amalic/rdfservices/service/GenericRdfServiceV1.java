@@ -117,6 +117,4 @@ public class GenericRdfServiceV1 {
     	repository.handleApiCall(GenericRdfServiceQueryBuilder.executeSparql(sparql, page, limit), request, response);
     }
     
-    
-    
 }
