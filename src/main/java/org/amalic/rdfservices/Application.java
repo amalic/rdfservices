@@ -1,5 +1,6 @@
 package org.amalic.rdfservices;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletResponse;
@@ -42,7 +43,7 @@ public class Application {
     public void getDefault(HttpServletResponse response) {
     	try {
     		response.sendRedirect("/swagger-ui.html");
-    	} catch (Exception e) {
+    	} catch (IOException e) {
     		logger.severe("Error: " + ExceptionUtils.getStackTrace(e));
     	}
     }

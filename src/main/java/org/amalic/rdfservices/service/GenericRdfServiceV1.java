@@ -100,9 +100,7 @@ public class GenericRdfServiceV1 {
     @PostMapping(value = "/executeSparql", consumes =  "application/sparql-query")
     @Operation(
     	summary = "Executes a SPARQL query."
-    	, description = "<p><pre style=\"display:inline; margin:0;\">OFFSET</pre> and"
-    			+ " <pre style=\"display:inline; margin:0;\">LIMIT</pre> at the end"
-    			+ " of the Sparql query will be ignored.</p>"
+    	, description = "OFFSET and LIMIT clauses at the end of the Sparql query will be ignored."
 	    , responses = { 
 	    	@ApiResponse(
 	    		content = {
