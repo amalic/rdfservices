@@ -4,7 +4,7 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,7 +43,7 @@ public class Application {
     	try {
     		response.sendRedirect("/swagger-ui.html");
     	} catch (Exception e) {
-    		logger.severe("Error: " + ExceptionUtils.getFullStackTrace(e));
+    		logger.severe("Error: " + ExceptionUtils.getStackTrace(e));
     	}
     }
     
