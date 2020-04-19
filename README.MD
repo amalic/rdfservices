@@ -7,7 +7,7 @@ This project aims to be a template for generating OpenAPI webservices through [S
 ```
 git clone --recursive https://github.com/amalic/rdfservices.git
 ```
-*Please note that GraphDb Free binaries have to be downloaded from the [Ontotext website](https://www.ontotext.com/products/graphdb/graphdb-free/) seperately. This example was tested with GraphDB 9.1.1 free edition.*
+*Please note that GraphDb Free binaries have to be downloaded from the [Ontotext website](https://www.ontotext.com/products/graphdb/graphdb-free/) seperately. This example was tested with GraphDB 9.1.1 free edition.Download the zip archive into the graphdb-free folder*
 ## Run
 For volume mounts and other settings you can create a file called `docker-compose-local.yml`.
 
@@ -27,7 +27,7 @@ services:
       - ./data/graphdb/:/opt/graphdb/home/
       - ./data/imports/:/root/graphdb-import/
 ```
-*This example expects a repository called **scigraph** to exist and be available without login. It will create a `./data` subdirectory for graph-db database data and a direcory for for server-side data imports.*
+*This example expects a repository called **scigraph** to exist and be available without login. It will create a `./data` subdirectory for graph-db database data and a direcory for for server-side data imports. Don't forget to adjust your `docker-compose-local.yml` file accordingly in case you are using a newer version of GraphDb.*
 
 **Start via docker-compose**
 ```
