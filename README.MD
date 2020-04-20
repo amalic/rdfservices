@@ -21,11 +21,15 @@ services:
   rdfservices:
     environment:
       - ENDPOINT=http://graphdb:7200/repositories/scigraph
+    ports:
+      - 80:8080
   graphdb:
     build:
       args:
         - edition=free
         - version=9.1.1
+    ports:
+      - 7200:7200
     volumes:
       - ./data/graphdb/:/opt/graphdb/home/
       - ./data/imports/:/root/graphdb-import/
