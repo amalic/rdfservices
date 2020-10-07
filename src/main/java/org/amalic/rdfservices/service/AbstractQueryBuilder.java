@@ -9,7 +9,7 @@ public class AbstractQueryBuilder {
 	
 	public static String checkGraph(String innerSparql, String graph) {
 		if(graph!=null && graph.length()>0)
-			return String.format(" graph <%s> {", graph) + innerSparql + "}";
+			return String.format(" graph <%s> { <%s> }", graph, innerSparql);
 		else
 			return innerSparql;
 	}
