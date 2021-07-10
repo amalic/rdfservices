@@ -12,6 +12,7 @@ springdoc:
 logging:
   level:
     root: ERROR
+    org.springdoc: INFO
     org.amalic: DEBUG
 
 server:
