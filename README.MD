@@ -27,7 +27,7 @@ services:
     build:
       args:
         - edition=free
-        - version=9.1.1
+        - version=9.8.0
     ports:
       - 7200:7200
     volumes:
