@@ -18,52 +18,52 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class RdfRepository {
-	private static final Logger logger = Logger.getLogger(RdfRepository.class.getName());
+    private static final Logger logger = Logger.getLogger(RdfRepository.class.getName());
 
-	@Value("${default.endpoint}")
-	private String defaultEndpoint;
+    @Value("${default.endpoint}")
+    private String defaultEndpoint;
 
-	private SPARQLRepository repo;
+    private SPARQLRepository repo;
 
-	public void handleApiCall(String query, HttpServletRequest request, HttpServletResponse response) throws IOException {
-		ResultAs resultAs = ResultAs.fromContentType(request.getHeader("accept"));
-		response.setContentType(resultAs.getContentType());
-		executeSparql(query, response.getOutputStream(), resultAs);
-	}
+    public void handleApiCall(String query, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        ResultAs resultAs = ResultAs.fromContentType(request.getHeader("accept"));
+        response.setContentType(resultAs.getContentType());
+        executeSparql(query, response.getOutputStream(), resultAs);
+    }
 
-	public void executeSparql(String query, final OutputStream outputStream, ResultAs resultAs) {
-		Repository repo = getRepo();
-		logger.fine("Executing SPARQL: " + query);
-		try {
-			Repositories.tupleQueryNoTransaction(repo, query, resultAs.getWriter(outputStream));
-		} finally {
-			repo.getConnection().close();
-		}
+    public void executeSparql(String query, final OutputStream outputStream, ResultAs resultAs) {
+        Repository repo = getRepo();
+        logger.fine("Executing SPARQL: " + query);
+        try {
+            Repositories.tupleQueryNoTransaction(repo, query, resultAs.getWriter(outputStream));
+        } finally {
+            repo.getConnection().close();
+        }
 
-	}
+    }
 
-	public List<BindingSet> executeSparql(String query) {
-		Repository repo = getRepo();
-		try {
-			return Repositories.tupleQueryNoTransaction(repo, query, iter -> QueryResults.asList(iter));
-		} finally {
-			repo.getConnection().close();
-		}
-	}
+    public List<BindingSet> executeSparql(String query) {
+        Repository repo = getRepo();
+        try {
+            return Repositories.tupleQueryNoTransaction(repo, query, iter -> QueryResults.asList(iter));
+        } finally {
+            repo.getConnection().close();
+        }
+    }
 
-	public SPARQLRepository getRepo() {
-		if (repo == null) {
-			String endpoint = System.getenv("ENDPOINT");
-			if (endpoint == null || endpoint.length() == 0)
-				endpoint = defaultEndpoint;
-			logger.config("ENDPOINT: " + endpoint);
-			repo = new SPARQLRepository(endpoint);
-		}
-		if (!repo.isInitialized()) {
-			repo.init();
-			logger.info("Repository initialized");
-		}
-		return repo;
-	}
+    public SPARQLRepository getRepo() {
+        if (repo == null) {
+            String endpoint = System.getenv("ENDPOINT");
+            if (endpoint == null || endpoint.length() == 0)
+                endpoint = defaultEndpoint;
+            logger.config("ENDPOINT: " + endpoint);
+            repo = new SPARQLRepository(endpoint);
+        }
+        if (!repo.isInitialized()) {
+            repo.init();
+            logger.info("Repository initialized");
+        }
+        return repo;
+    }
 
 }

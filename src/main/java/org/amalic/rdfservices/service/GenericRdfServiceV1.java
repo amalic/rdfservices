@@ -23,98 +23,98 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 @RestController
 @RequestMapping("/generic/v1")
 public class GenericRdfServiceV1 {
-	@SuppressWarnings("unused")
-	private static final Logger logger = Logger.getLogger(GenericRdfServiceV1.class.getName());
+    @SuppressWarnings("unused")
+    private static final Logger logger = Logger.getLogger(GenericRdfServiceV1.class.getName());
     
     @Autowired
-	private RdfRepository repository;
+    private RdfRepository repository;
     
     @GetMapping(value = "/getGraphs")
     @Operation(summary = "Returns all graphs and statement count."
-		, responses = { 
-			@ApiResponse(
-    			content = {
-					@Content(mediaType = ResultAs.CONTENT_TYPE_CSV)
-					, @Content(mediaType = ResultAs.CONTENT_TYPE_TSV)
-					, @Content(mediaType = ResultAs.CONTENT_TYPE_JSON)
-					, @Content(mediaType = ResultAs.CONTENT_TYPE_XML)
-	})})
+        , responses = { 
+            @ApiResponse(
+                content = {
+                    @Content(mediaType = ResultAs.CONTENT_TYPE_CSV)
+                    , @Content(mediaType = ResultAs.CONTENT_TYPE_TSV)
+                    , @Content(mediaType = ResultAs.CONTENT_TYPE_JSON)
+                    , @Content(mediaType = ResultAs.CONTENT_TYPE_XML)
+    })})
     public void getGraphs(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    	repository.handleApiCall(GenericRdfServiceQueryBuilder.graphs(), request, response);
+        repository.handleApiCall(GenericRdfServiceQueryBuilder.graphs(), request, response);
     }
     
     @GetMapping(value = "/getClasses")
     @Operation(summary = "Returns a list of classes and instance count."
-		, responses = { 
-			@ApiResponse(
-				content = {
-					@Content(mediaType = ResultAs.CONTENT_TYPE_CSV)
-					, @Content(mediaType = ResultAs.CONTENT_TYPE_TSV)
-					, @Content(mediaType = ResultAs.CONTENT_TYPE_JSON)
-					, @Content(mediaType = ResultAs.CONTENT_TYPE_XML)
-	})})
+        , responses = { 
+            @ApiResponse(
+                content = {
+                    @Content(mediaType = ResultAs.CONTENT_TYPE_CSV)
+                    , @Content(mediaType = ResultAs.CONTENT_TYPE_TSV)
+                    , @Content(mediaType = ResultAs.CONTENT_TYPE_JSON)
+                    , @Content(mediaType = ResultAs.CONTENT_TYPE_XML)
+    })})
     public void getClasses(HttpServletRequest request, HttpServletResponse response
-    		, @RequestParam(required = false) String graph
-    		) throws IOException {
-    	repository.handleApiCall(GenericRdfServiceQueryBuilder.getClasses(graph), request, response);
+            , @RequestParam(required = false) String graph
+            ) throws IOException {
+        repository.handleApiCall(GenericRdfServiceQueryBuilder.getClasses(graph), request, response);
     }
     
     @GetMapping(value = "/getInstances")
     @Operation(summary = "Returns all instances."
-		, responses = { 
-			@ApiResponse(
-				content = {
-					@Content(mediaType = ResultAs.CONTENT_TYPE_CSV)
-					, @Content(mediaType = ResultAs.CONTENT_TYPE_TSV)
-					, @Content(mediaType = ResultAs.CONTENT_TYPE_JSON)
-					, @Content(mediaType = ResultAs.CONTENT_TYPE_XML)
-	})})
+        , responses = { 
+            @ApiResponse(
+                content = {
+                    @Content(mediaType = ResultAs.CONTENT_TYPE_CSV)
+                    , @Content(mediaType = ResultAs.CONTENT_TYPE_TSV)
+                    , @Content(mediaType = ResultAs.CONTENT_TYPE_JSON)
+                    , @Content(mediaType = ResultAs.CONTENT_TYPE_XML)
+    })})
     public void getInstances(HttpServletRequest request, HttpServletResponse response
-    		, @RequestParam(required = false) String graph
-    		, @RequestParam(required = false) String className
-    		, @RequestParam(required = false) Long page
-    		, @RequestParam(required = false) Long limit
-    		) throws IOException {
-    	repository.handleApiCall(GenericRdfServiceQueryBuilder.getInstances(graph, className, page, limit), request, response);
+            , @RequestParam(required = false) String graph
+            , @RequestParam(required = false) String className
+            , @RequestParam(required = false) Long page
+            , @RequestParam(required = false) Long limit
+            ) throws IOException {
+        repository.handleApiCall(GenericRdfServiceQueryBuilder.getInstances(graph, className, page, limit), request, response);
     }
     
     @GetMapping(value = "/getPropertiesOfInstance")
     @Operation(
-    	summary = "Returns all properties and values of a specific instance."
-	    , responses = { 
-	    	@ApiResponse(
-	    		content = {
-		    		@Content(mediaType = ResultAs.CONTENT_TYPE_CSV)
-					, @Content(mediaType = ResultAs.CONTENT_TYPE_TSV)
-		    		, @Content(mediaType = ResultAs.CONTENT_TYPE_JSON)
-					, @Content(mediaType = ResultAs.CONTENT_TYPE_XML)
+        summary = "Returns all properties and values of a specific instance."
+        , responses = { 
+            @ApiResponse(
+                content = {
+                    @Content(mediaType = ResultAs.CONTENT_TYPE_CSV)
+                    , @Content(mediaType = ResultAs.CONTENT_TYPE_TSV)
+                    , @Content(mediaType = ResultAs.CONTENT_TYPE_JSON)
+                    , @Content(mediaType = ResultAs.CONTENT_TYPE_XML)
     })})
     public void getPropertiesOfInstance(HttpServletRequest request, HttpServletResponse response
-    		, @RequestParam(required = false) String graph
-    		, @RequestParam(required = false) String className
-    		, @RequestParam String id
-    		) throws IOException {
-    	repository.handleApiCall(GenericRdfServiceQueryBuilder.getPropertiesOfInstance(graph, className, id), request, response);
+            , @RequestParam(required = false) String graph
+            , @RequestParam(required = false) String className
+            , @RequestParam String id
+            ) throws IOException {
+        repository.handleApiCall(GenericRdfServiceQueryBuilder.getPropertiesOfInstance(graph, className, id), request, response);
     }
     
     @PostMapping(value = "/executeSparql", consumes =  "application/sparql-query")
     @Operation(
-    	summary = "Executes a SPARQL query."
-    	, description = "OFFSET and LIMIT clauses at the end of the Sparql query will be ignored."
-	    , responses = { 
-	    	@ApiResponse(
-	    		content = {
-					@Content(mediaType = ResultAs.CONTENT_TYPE_CSV)
-					, @Content(mediaType = ResultAs.CONTENT_TYPE_TSV)
-					, @Content(mediaType = ResultAs.CONTENT_TYPE_JSON)
-					, @Content(mediaType = ResultAs.CONTENT_TYPE_XML)
-	})})
+        summary = "Executes a SPARQL query."
+        , description = "OFFSET and LIMIT clauses at the end of the Sparql query will be ignored."
+        , responses = { 
+            @ApiResponse(
+                content = {
+                    @Content(mediaType = ResultAs.CONTENT_TYPE_CSV)
+                    , @Content(mediaType = ResultAs.CONTENT_TYPE_TSV)
+                    , @Content(mediaType = ResultAs.CONTENT_TYPE_JSON)
+                    , @Content(mediaType = ResultAs.CONTENT_TYPE_XML)
+    })})
     public void executeSparql(HttpServletRequest request, HttpServletResponse response
-    		, @RequestBody String sparql
-    		, @RequestParam(required = false) Long page
-    		, @RequestParam(required = false) Long limit
-    		) throws IOException {
-    	repository.handleApiCall(GenericRdfServiceQueryBuilder.executeSparql(sparql, page, limit), request, response);
+            , @RequestBody String sparql
+            , @RequestParam(required = false) Long page
+            , @RequestParam(required = false) Long limit
+            ) throws IOException {
+        repository.handleApiCall(GenericRdfServiceQueryBuilder.executeSparql(sparql, page, limit), request, response);
     }
     
 }
