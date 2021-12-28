@@ -1,5 +1,5 @@
 # stage-0 for build
-FROM maven:3-jdk-11 as builder
+FROM maven:3-openjdk-17-slim as builder
 WORKDIR /tmp
 ## cache dependencies seperatly
 ## only runs if pom.xml changes
@@ -10,7 +10,7 @@ COPY src/ ./src/
 RUN mvn package spring-boot:repackage
 
 # stage-1 for execution
-FROM openjdk:11-jre-slim
+FROM openjdk:17-slim
 WORKDIR /app
 COPY --from=builder /tmp/target/rdfservices-*.jar ./rdfservices.jar
 ENTRYPOINT ["java","-jar","rdfservices.jar"]
